@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divy Jain | Growth Partner</title>
+    
+    <!-- 1. Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. Load React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- 3. Load Babel (to translate the code) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- 4. Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: black; color: white; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- THE APP LOGIC -->
+    <script type="text/babel">
+        const { useState } = React;
+
+        // --- ICONS (Inline for simplicity) ---
+        const IconWrapper = ({ children, className, size = 24, ...props }) => (
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width={size} 
+                height={size} 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className={className} 
+                {...props}
+            >
+                {children}
+            </svg>
+        );
+
+        const Play = (props) => <IconWrapper {...props}><polygon points="5 3 19 12 5 21 5 3"></polygon></IconWrapper>;
+        const Check = (props) => <IconWrapper {...props}><polyline points="20 6 9 17 4 12"></polyline></IconWrapper>;
+        const X = (props) => <IconWrapper {...props}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></IconWrapper>;
+        const Clock = (props) => <IconWrapper {...props}><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></IconWrapper>;
+        const Zap = (props) => <IconWrapper {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></IconWrapper>;
+        const TrendingUp = (props) => <IconWrapper {...props}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></IconWrapper>;
+        const Video = (props) => <IconWrapper {...props}><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></IconWrapper>;
+        const ShieldCheck = (props) => <IconWrapper {...props}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></IconWrapper>;
+        const ArrowRight = (props) => <IconWrapper {...props}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></IconWrapper>;
+        const Menu = (props) => <IconWrapper {...props}><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></IconWrapper>;
+        const Mail = (props) => <IconWrapper {...props}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></IconWrapper>;
+        const ExternalLink = (props) => <IconWrapper {...props}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></IconWrapper>;
+        const Loader2 = (props) => <IconWrapper {...props}><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></IconWrapper>;
+
+
+        // --- COMPONENTS ---
+
+        const Button = ({ children, primary, className = "", onClick, disabled }) => {
+            const baseStyle = "px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0";
+            const primaryStyle = "bg-yellow-500 text-black hover:bg-yellow-400 shadow-yellow-500/20";
+            const secondaryStyle = "bg-zinc-800 text-white border border-zinc-700 hover:bg-zinc-700 hover:border-zinc-600";
+
+            return (
+                <button 
+                onClick={onClick}
+                disabled={disabled}
+                className={`${baseStyle} ${primary ? primaryStyle : secondaryStyle} ${className}`}
+                >
+                {children}
+                </button>
+            );
+        };
+
+        const SectionHeading = ({ title, subtitle, align = "center" }) => (
+            <div className={`mb-12 ${align === "left" ? "text-left" : "text-center"}`}>
+                <h2 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight uppercase italic">
+                {title}
+                </h2>
+                {subtitle && <p className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto">{subtitle}</p>}
+            </div>
+        );
+
+        const Card = ({ children, className = "" }) => (
+            <div className={`bg-zinc-900/50 border border-zinc-800 p-8 rounded-xl backdrop-blur-sm ${className}`}>
+                {children}
+            </div>
+        );
+
+        // --- MAIN APP ---
+
+        function App() {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const [formStatus, setFormStatus] = useState('idle'); 
+
+            const scrollToSection = (id) => {
+                const element = document.getElementById(id);
+                if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                }
+                setIsMenuOpen(false);
+            };
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setFormStatus('submitting');
+
+                // YOUR GOOGLE SCRIPT URL
+                const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpvAfT-Eiv6lHKuKSUBN1GJGUpk_ZrYopUfPohEMiw4WnIQ1uK_sgbXVNrwGuwESdkLQ/exec";
+                
+                const form = e.target;
+                const formData = new FormData(form);
+                
+                try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors' 
+                });
+                
+                setFormStatus('success');
+                form.reset();
+                } catch (error) {
+                console.error('Error!', error.message);
+                setFormStatus('error');
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-black text-zinc-100 font-sans selection:bg-yellow-500 selection:text-black overflow-x-hidden">
+                
+                {/* Navigation */}
+                <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+                    <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                    <div className="text-2xl font-black tracking-tighter italic text-white uppercase">
+                        DIVY<span className="text-yellow-500">JAIN</span>
+                    </div>
+                    
+                    <div className="hidden md:flex gap-8 text-sm font-medium text-zinc-400">
+                        <button onClick={() => scrollToSection('process')} className="hover:text-white transition-colors">Process</button>
+                        <button onClick={() => scrollToSection('portfolio')} className="hover:text-white transition-colors">Work</button>
+                        <button onClick={() => scrollToSection('offer')} className="hover:text-white transition-colors">The Offer</button>
+                        <button onClick={() => scrollToSection('apply')} className="text-yellow-500 hover:text-yellow-400 transition-colors">Apply Now</button>
+                    </div>
+
+                    <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                        <Menu size={28} />
+                    </button>
+                    </div>
+
+                    {isMenuOpen && (
+                    <div className="md:hidden absolute top-20 left-0 w-full bg-zinc-900 border-b border-zinc-800 p-6 flex flex-col gap-4">
+                        <button onClick={() => scrollToSection('process')} className="text-left text-lg text-zinc-300">Process</button>
+                        <button onClick={() => scrollToSection('portfolio')} className="text-left text-lg text-zinc-300">Work</button>
+                        <button onClick={() => scrollToSection('offer')} className="text-left text-lg text-zinc-300">The Offer</button>
+                        <button onClick={() => scrollToSection('apply')} className="text-left text-lg text-yellow-500 font-bold">Apply Now</button>
+                    </div>
+                    )}
+                </nav>
+
+                {/* 1. Hero Section */}
+                <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6">
+                    <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-600/20 rounded-full blur-[128px]" />
+                    <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[128px]" />
+                    </div>
+
+                    <div className="max-w-5xl mx-auto text-center">
+                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-8 tracking-tight">
+                        Turn Your Raw Footage Into <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">High-Converting Assets</span> That Scale Your Brand.
+                    </h1>
+                    
+                    <p className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12 leading-relaxed">
+                        Save <span className="text-white font-bold">10+ hours a week</span> while doubling your output. 
+                        <br className="hidden md:block" />
+                        I handle the heavy lifting so you can focus on being the Creator.
+                    </p>
+
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+                        <Button primary onClick={() => scrollToSection('apply')}>
+                        Book A 15-Min Strategy Call <ArrowRight size={20} />
+                        </Button>
+                        <Button onClick={() => scrollToSection('portfolio')}>
+                        View Recent Work <Play size={20} />
+                        </Button>
+                    </div>
+                    
+                    <p className="mt-4 text-zinc-500 text-sm">No pressure. Just a chat about your content goals.</p>
+                    </div>
+                </section>
+
+                {/* 2. Problem Section */}
+                <section className="py-24 bg-zinc-900/30 border-y border-white/5 px-6">
+                    <div className="max-w-6xl mx-auto">
+                    <SectionHeading 
+                        title="Most Editors Just 'Cut' Video. I Engineer Attention."
+                        subtitle="You’ve probably dealt with editors who create more problems than they solve."
+                    />
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {[
+                        { title: "The Ghost", desc: "Misses deadlines, vanishes for days, and leaves you wondering if you'll have content to post.", icon: Clock },
+                        { title: "The Retention Killer", desc: "Creates boring, slow edits that cause viewers to swipe away in the first 3 seconds.", icon: TrendingUp },
+                        { title: "The Time Sink", desc: "Requires you to micromanage every second, find music, and write timestamps.", icon: Zap },
+                        ].map((item, i) => (
+                        <Card key={i} className="hover:bg-red-900/10 transition-colors group">
+                            <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-red-500/20">
+                            <item.icon className="text-red-500" size={24} />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+                            <p className="text-zinc-400 leading-relaxed">{item.desc}</p>
+                        </Card>
+                        ))}
+                    </div>
+                    </div>
+                </section>
+
+                {/* 3. Mechanism */}
+                <section id="process" className="py-24 px-6">
+                    <div className="max-w-6xl mx-auto">
+                    <SectionHeading 
+                        title="The 'Retention-First' Workflow"
+                        subtitle="I don’t just edit; I use a data-driven approach to keep viewers watching."
+                    />
+
+                    <div className="grid md:grid-cols-3 gap-12 relative">
+                        <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-zinc-800 via-yellow-500/50 to-zinc-800 -z-10" />
+
+                        {[
+                        { step: "01", title: "Hook Optimization", desc: "I analyze your raw footage to find the exact split-second to start the video for maximum impact." },
+                        { step: "02", title: "Visual Pacing", desc: "Using Premiere Pro, DaVinci Resolve & After Effects to create motion graphics that reset attention every 3-5 seconds." },
+                        { step: "03", title: "Brand Alignment", desc: "No generic templates. Every asset is tailored to your specific voice and brand identity." },
+                        ].map((item, i) => (
+                        <div key={i} className="bg-black p-6 border border-zinc-800 rounded-xl relative">
+                            <div className="text-6xl font-black text-zinc-800 absolute -top-8 -right-4 select-none opacity-50">{item.step}</div>
+                            <h3 className="text-xl font-bold text-yellow-500 mb-4">{item.title}</h3>
+                            <p className="text-zinc-400">{item.desc}</p>
+                        </div>
+                        ))}
+                    </div>
+                    </div>
+                </section>
+
+                {/* 4. Portfolio */}
+                <section id="portfolio" className="py-24 bg-zinc-900/30 border-y border-white/5 px-6">
+                    <div className="max-w-6xl mx-auto">
+                    <SectionHeading 
+                        title="Proven Results"
+                        subtitle="100% Edited in Premiere Pro, DaVinci Resolve & After Effects."
+                    />
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {[
+                        { id: "dcCs0EVfGdg", type: "Viral Style", tag: "Retention", color: "bg-blue-500" },
+                        { id: "xLsWO_xKIEQ", type: "Storytelling", tag: "Brand Value", color: "bg-green-500" },
+                        { id: "Z_9cKWztJjA", type: "Technical VFX", tag: "Authority", color: "bg-purple-500" },
+                        ].map((video, i) => (
+                        <div key={i} className="group relative aspect-[9/16] bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700">
+                            <iframe 
+                                className="absolute inset-0 w-full h-full"
+                                src={`https://www.youtube.com/embed/${video.id}`} 
+                                title={video.type}
+                                frameBorder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowFullScreen
+                            ></iframe>
+
+                            <div className={`absolute top-4 right-4 ${video.color} text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide pointer-events-none`}>
+                            {video.tag}
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+                    
+                    <div className="mt-12 text-center">
+                        <a 
+                        href="https://drive.google.com/drive/folders/1JtR1pDjTpHcIqh0UM9MWWk3rKHVCwvzC?usp=drive_link" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-yellow-500 hover:text-yellow-400 font-bold border-b border-yellow-500/50 pb-1 hover:border-yellow-400 transition-all"
+                        >
+                        View Full Portfolio on Drive <ExternalLink size={16} />
+                        </a>
+                    </div>
+                    </div>
+                </section>
+
+                {/* 5. The Grand Slam Offer */}
+                <section id="offer" className="py-24 px-6 relative overflow-hidden">
+                    <div className="max-w-4xl mx-auto relative z-10">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl md:text-5xl font-black text-white mb-4 italic uppercase">
+                        The "Growth Partner" Package
+                        </h2>
+                        <p className="text-zinc-400">I don't charge by the hour. I deliver a complete result.</p>
+                    </div>
+
+                    <div className="bg-gradient-to-b from-zinc-900 to-black border border-yellow-500/30 rounded-2xl p-8 md:p-12 relative shadow-2xl shadow-yellow-900/10">
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-500 text-black font-black px-6 py-2 rounded-full uppercase tracking-widest text-sm">
+                        Most Popular
+                        </div>
+
+                        <div className="space-y-6">
+                        {[
+                            "Premium Video Editing (Cuts, Grading, Sound)",
+                            "Hormozi-Style Captions for Retention",
+                            "Hook Selection (I pick the best intro)",
+                            "Royalty-Free Music & SFX Licensing",
+                            "Unlimited Revisions (We don't stop until you love it)"
+                        ].map((feature, i) => (
+                            <div key={i} className="flex items-start gap-4">
+                            <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center shrink-0 mt-1">
+                                <Check size={14} className="text-green-500" />
+                            </div>
+                            <span className="text-lg text-zinc-200">{feature}</span>
+                            </div>
+                        ))}
+
+                        <div className="mt-8 pt-8 border-t border-zinc-800 space-y-4">
+                            <h4 className="text-yellow-500 font-bold uppercase tracking-widest text-sm mb-4">Included Bonuses</h4>
+                            {[
+                            "Thumbnail Selection (2 Options per video)",
+                            "Native Upload Files (Reels, TikTok, Shorts formats)",
+                            "SEO Tag Strategy for YouTube Shorts"
+                            ].map((bonus, i) => (
+                            <div key={i} className="flex items-start gap-4">
+                                <div className="w-6 h-6 bg-yellow-500/20 rounded-full flex items-center justify-center shrink-0 mt-1">
+                                <Zap size={14} className="text-yellow-500" />
+                                </div>
+                                <span className="text-lg text-zinc-300 font-medium">{bonus}</span>
+                            </div>
+                            ))}
+                        </div>
+                        </div>
+
+                        <div className="mt-12">
+                        <Button primary className="w-full" onClick={() => scrollToSection('apply')}>
+                            Apply For A Spot
+                        </Button>
+                        <p className="text-center text-zinc-500 mt-4 text-sm">Limited capacity to ensure quality.</p>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+
+                {/* 6. Guarantee */}
+                <section className="py-20 px-6">
+                    <div className="max-w-4xl mx-auto bg-zinc-900/50 border border-zinc-800 p-8 md:p-12 rounded-2xl text-center">
+                    <ShieldCheck size={48} className="text-yellow-500 mx-auto mb-6" />
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">The "No-Risk" Guarantee</h2>
+                    <p className="text-xl text-zinc-300 leading-relaxed max-w-2xl mx-auto">
+                        If you don't love the first draft, I will re-edit it until you do. 
+                        If we can't make it work, you don't pay a cent. 
+                        <br /><span className="text-white font-bold">You literally cannot lose.</span>
+                    </p>
+                    </div>
+                </section>
+
+                {/* 7. CTA / Form */}
+                <section id="apply" className="py-24 px-6 text-center border-t border-white/10">
+                    <div className="max-w-3xl mx-auto">
+                    <h2 className="text-4xl md:text-6xl font-black text-white mb-6">Ready To Scale?</h2>
+                    <p className="text-xl text-zinc-400 mb-8">
+                        I am currently a specialized boutique editor. <br />
+                        I have <span className="text-yellow-500 font-bold underline decoration-2 underline-offset-4">2 spots</span> open for this month.
+                    </p>
+                    
+                    {formStatus === 'success' ? (
+                        <div className="max-w-md mx-auto bg-green-500/20 border border-green-500 p-6 rounded-xl text-center">
+                        <Check className="w-12 h-12 text-green-500 mx-auto mb-4" />
+                        <h3 className="text-2xl font-bold text-white mb-2">Application Received!</h3>
+                        <p className="text-zinc-300">I'll review your info and get back to you within 24 hours.</p>
+                        <button 
+                            onClick={() => setFormStatus('idle')}
+                            className="mt-6 text-sm text-zinc-400 hover:text-white underline"
+                        >
+                            Send another response
+                        </button>
+                        </div>
+                    ) : (
+                        <form 
+                        onSubmit={handleSubmit}
+                        className="max-w-md mx-auto space-y-4 mb-8 text-left"
+                        >
+                        <div>
+                            <label className="block text-zinc-500 text-xs font-bold uppercase mb-2">Your Name</label>
+                            <input 
+                            type="text" 
+                            name="Name"
+                            required
+                            disabled={formStatus === 'submitting'}
+                            className="w-full bg-zinc-900 border border-zinc-800 text-white p-4 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors disabled:opacity-50" 
+                            placeholder="John Doe" 
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-zinc-500 text-xs font-bold uppercase mb-2">Email Address</label>
+                            <input 
+                            type="email" 
+                            name="Email"
+                            required
+                            disabled={formStatus === 'submitting'}
+                            className="w-full bg-zinc-900 border border-zinc-800 text-white p-4 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors disabled:opacity-50" 
+                            placeholder="john@example.com" 
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-zinc-500 text-xs font-bold uppercase mb-2">Link to Raw Footage (Optional)</label>
+                            <input 
+                            type="text" 
+                            name="Link"
+                            disabled={formStatus === 'submitting'}
+                            className="w-full bg-zinc-900 border border-zinc-800 text-white p-4 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors disabled:opacity-50" 
+                            placeholder="Google Drive / Dropbox Link" 
+                            />
+                        </div>
+                        
+                        <Button primary className="w-full justify-center" disabled={formStatus === 'submitting'}>
+                            {formStatus === 'submitting' ? (
+                            <>
+                                <Loader2 className="animate-spin" size={20} /> Submitting...
+                            </>
+                            ) : (
+                            "Submit Application"
+                            )}
+                        </Button>
+                        
+                        {formStatus === 'error' && (
+                            <p className="text-red-500 text-center text-sm mt-2">
+                            Something went wrong. Please email me directly.
+                            </p>
+                        )}
+                        </form>
+                    )}
+                    
+                    <div className="flex items-center justify-center gap-6 text-zinc-600">
+                        <a href="#" className="hover:text-white transition-colors"><Mail size={20} /></a>
+                    </div>
+                    <p className="mt-8 text-zinc-700 text-sm">© {new Date().getFullYear()} Divy Jain. All rights reserved.</p>
+                    </div>
+                </section>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
