@@ -27,6 +27,11 @@
     </script>
     <style>
         body { background-color: black; color: white; }
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
 </head>
 <body>
@@ -36,7 +41,7 @@
     <script type="text/babel">
         const { useState } = React;
 
-        // --- ICONS (Inline for simplicity) ---
+        // --- ICONS ---
         const IconWrapper = ({ children, className, size = 24, ...props }) => (
             <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -61,7 +66,7 @@
         const Clock = (props) => <IconWrapper {...props}><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></IconWrapper>;
         const Zap = (props) => <IconWrapper {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></IconWrapper>;
         const TrendingUp = (props) => <IconWrapper {...props}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></IconWrapper>;
-        const Video = (props) => <IconWrapper {...props}><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></IconWrapper>;
+        const VideoIcon = (props) => <IconWrapper {...props}><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></IconWrapper>;
         const ShieldCheck = (props) => <IconWrapper {...props}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></IconWrapper>;
         const ArrowRight = (props) => <IconWrapper {...props}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></IconWrapper>;
         const Menu = (props) => <IconWrapper {...props}><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></IconWrapper>;
@@ -70,7 +75,7 @@
         const Loader2 = (props) => <IconWrapper {...props}><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></IconWrapper>;
 
 
-        // --- COMPONENTS ---
+        // --- SHARED COMPONENTS ---
 
         const Button = ({ children, primary, className = "", onClick, disabled }) => {
             const baseStyle = "px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0";
@@ -103,6 +108,63 @@
             </div>
         );
 
+        // --- VIDEO PLAYER COMPONENT (THE FIX) ---
+        
+        const VideoCard = ({ id, type, tag, color, isVertical }) => {
+            const [isPlaying, setIsPlaying] = useState(false);
+
+            return (
+                <div className={`group relative ${isVertical ? 'aspect-[9/16]' : 'aspect-video'} bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700 shadow-xl flex flex-col`}>
+                    <div className="flex-grow relative w-full h-full bg-black">
+                        {!isPlaying ? (
+                            // 1. THUMBNAIL MODE (Shows Image + Play Button)
+                            <button 
+                                onClick={() => setIsPlaying(true)}
+                                className="absolute inset-0 w-full h-full flex items-center justify-center group"
+                            >
+                                <img 
+                                    src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`} 
+                                    alt={type}
+                                    className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity"
+                                />
+                                <div className="z-10 w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+                                    <Play className="text-black ml-1" fill="black" size={32} />
+                                </div>
+                                <div className="absolute bottom-4 left-4 text-xs font-bold bg-black/80 px-2 py-1 rounded text-white">
+                                    CLICK TO PLAY
+                                </div>
+                            </button>
+                        ) : (
+                            // 2. VIDEO MODE (Loads only when clicked)
+                            <iframe 
+                                className="absolute inset-0 w-full h-full"
+                                src={`https://www.youtube.com/embed/${id}?autoplay=1`} 
+                                title={type}
+                                frameBorder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowFullScreen
+                            ></iframe>
+                        )}
+                    </div>
+
+                    {/* External Link Safety Net */}
+                    <a 
+                        href={`https://www.youtube.com/watch?v=${id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block bg-zinc-900 text-center py-2 text-xs text-zinc-500 hover:text-white hover:bg-zinc-800 transition-colors border-t border-zinc-700 z-20 relative"
+                    >
+                        Watch on YouTube ↗
+                    </a>
+
+                    <div className={`absolute top-4 right-4 ${color} text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide pointer-events-none shadow-lg z-30`}>
+                        {tag}
+                    </div>
+                </div>
+            );
+        };
+
+
         // --- MAIN APP ---
 
         function App() {
@@ -120,8 +182,8 @@
             const handleSubmit = async (e) => {
                 e.preventDefault();
                 setFormStatus('submitting');
-
-                // YOUR GOOGLE SCRIPT URL
+                
+                // Using the URL provided by user
                 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpvAfT-Eiv6lHKuKSUBN1GJGUpk_ZrYopUfPohEMiw4WnIQ1uK_sgbXVNrwGuwESdkLQ/exec";
                 
                 const form = e.target;
@@ -257,7 +319,7 @@
                     </div>
                 </section>
 
-                {/* 4. Portfolio */}
+                {/* 4. Portfolio (USING NEW VIDEO CARD) */}
                 <section id="portfolio" className="py-24 bg-zinc-900/30 border-y border-white/5 px-6">
                     <div className="max-w-6xl mx-auto">
                     <SectionHeading 
@@ -267,24 +329,11 @@
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {[
-                        { id: "dcCs0EVfGdg", type: "Viral Style", tag: "Retention", color: "bg-blue-500" },
-                        { id: "xLsWO_xKIEQ", type: "Storytelling", tag: "Brand Value", color: "bg-green-500" },
-                        { id: "Z_9cKWztJjA", type: "Technical VFX", tag: "Authority", color: "bg-purple-500" },
+                        { id: "dcCs0EVfGdg", type: "Viral Style", tag: "Retention", color: "bg-blue-500", isVertical: false },
+                        { id: "xLsWO_xKIEQ", type: "Storytelling", tag: "Brand Value", color: "bg-green-500", isVertical: true },
+                        { id: "Z_9cKWztJjA", type: "Technical VFX", tag: "Authority", color: "bg-purple-500", isVertical: true },
                         ].map((video, i) => (
-                        <div key={i} className="group relative aspect-[9/16] bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700">
-                            <iframe 
-                                className="absolute inset-0 w-full h-full"
-                                src={`https://www.youtube.com/embed/${video.id}`} 
-                                title={video.type}
-                                frameBorder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowFullScreen
-                            ></iframe>
-
-                            <div className={`absolute top-4 right-4 ${video.color} text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide pointer-events-none`}>
-                            {video.tag}
-                            </div>
-                        </div>
+                            <VideoCard key={i} {...video} />
                         ))}
                     </div>
                     
@@ -402,7 +451,7 @@
                             <label className="block text-zinc-500 text-xs font-bold uppercase mb-2">Your Name</label>
                             <input 
                             type="text" 
-                            name="Name"
+                            name="name" 
                             required
                             disabled={formStatus === 'submitting'}
                             className="w-full bg-zinc-900 border border-zinc-800 text-white p-4 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors disabled:opacity-50" 
@@ -413,7 +462,7 @@
                             <label className="block text-zinc-500 text-xs font-bold uppercase mb-2">Email Address</label>
                             <input 
                             type="email" 
-                            name="Email"
+                            name="email"
                             required
                             disabled={formStatus === 'submitting'}
                             className="w-full bg-zinc-900 border border-zinc-800 text-white p-4 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors disabled:opacity-50" 
@@ -424,7 +473,7 @@
                             <label className="block text-zinc-500 text-xs font-bold uppercase mb-2">Link to Raw Footage (Optional)</label>
                             <input 
                             type="text" 
-                            name="Link"
+                            name="link"
                             disabled={formStatus === 'submitting'}
                             className="w-full bg-zinc-900 border border-zinc-800 text-white p-4 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors disabled:opacity-50" 
                             placeholder="Google Drive / Dropbox Link" 
