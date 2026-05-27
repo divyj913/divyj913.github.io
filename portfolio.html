@@ -5,6 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cinematic Space-Travel Landing Page</title>
   
+  <!-- Global Error Overlay for Debugging -->
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0'; overlay.style.left = '0';
+      overlay.style.width = '100vw'; overlay.style.height = '100vh';
+      overlay.style.background = 'rgba(30, 0, 0, 0.95)';
+      overlay.style.color = '#ff8888';
+      overlay.style.padding = '24px';
+      overlay.style.fontFamily = 'monospace';
+      overlay.style.fontSize = '14px';
+      overlay.style.zIndex = '999999';
+      overlay.style.overflow = 'auto';
+      overlay.style.boxSizing = 'border-box';
+      overlay.innerHTML = `
+        <h2 style="color: #ff4444; margin-top: 0;">JavaScript Runtime Error</h2>
+        <p><strong>Message:</strong> ${message}</p>
+        <p><strong>Source:</strong> ${source}</p>
+        <p><strong>Line:</strong> ${lineno} | <strong>Col:</strong> ${colno}</p>
+        <p><strong>Stack Trace:</strong></p>
+        <pre style="background: rgba(0,0,0,0.5); padding: 12px; border-radius: 4px; overflow-x: auto;">${error ? error.stack : 'No stack trace available'}</pre>
+      `;
+      document.body.appendChild(overlay);
+      return false;
+    };
+  </script>
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -104,9 +132,14 @@
   <script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
   
   <script>
-    // Bind Framer Motion to window.Motion as requested
-    window.Motion = window.FramerMotion;
-    
+    // Safeguard Framer Motion Global Mapping
+    // Since this package exports to window.Motion directly, copy it to window.FramerMotion
+    // first so the prompt's required script assignment doesn't clear window.Motion.
+    window.FramerMotion = window.FramerMotion || window.Motion;
+  </script>
+  <script>window.Motion = window.FramerMotion;</script>
+
+  <script>
     // Suppress benign Framer Motion dev warnings about list keys
     const originalError = console.error;
     console.error = (...args) => {
