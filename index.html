@@ -621,6 +621,60 @@
       background: var(--c-bg2);
     }
 
+    .flagship-card {
+      border: 1px solid var(--c-accent);
+      background: rgba(232, 201, 122, 0.015);
+      padding: 3rem;
+      margin-top: 2rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .flagship-card:hover {
+      background: rgba(232, 201, 122, 0.03);
+    }
+    .flagship-glow {
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(232, 201, 122, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .flagship-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .flagship-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid var(--c-line);
+      padding-left: 3rem;
+    }
+    .flagship-features {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+      padding: 0;
+    }
+    .flagship-features li {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--c-text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1098,6 +1152,19 @@
         grid-template-columns: 1fr;
       }
 
+      .flagship-card {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem;
+      }
+
+      .flagship-right {
+        border-left: none;
+        border-top: 1px solid var(--c-line);
+        padding-left: 0;
+        padding-top: 2rem;
+      }
+
       .about-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
@@ -1134,12 +1201,13 @@
     <a href="#" class="nav-logo">Divy <span>Jain</span></a>
     <ul class="nav-links">
       <li><a href="#work">Work</a></li>
+      <li><a href="offer.html" style="color: var(--c-accent); font-weight: 600;">Founder Content Engine</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#contact" class="nav-cta">Let's Talk</a>
+    <a href="offer.html" class="nav-cta">View Offer</a>
   </nav>
 
   <!-- HERO -->
@@ -1150,16 +1218,15 @@
       <div class="hero-noise"></div>
     </div>
     <div class="hero-content">
-      <div class="hero-eyebrow">Freelance Video Editor</div>
+      <div class="hero-eyebrow">Educational Content Growth Editor</div>
       <h1 class="hero-title">
-        Stories that<br>
-        <em>convert</em>
+        Podcasts into<br>
+        <em>Customers</em>
       </h1>
-      <p class="hero-sub">Podcast reels, documentary edits & high-energy montages that stop the scroll and drive real
-        results.</p>
+      <p class="hero-sub">I help founders and educators turn podcasts and long-form videos into high-performing short-form content that grows authority and attracts clients.</p>
       <div class="hero-ctas">
-        <a href="#work" class="btn-primary">Watch My Work</a>
-        <a href="#contact" class="btn-secondary">Get in Touch</a>
+        <a href="offer.html" class="btn-primary">Founder Content Engine</a>
+        <a href="#work" class="btn-secondary">Watch My Work</a>
       </div>
     </div>
     <div class="hero-scroll">
@@ -1351,7 +1418,35 @@
   <section id="services">
     <div class="section-tag">What I Do</div>
     <h2 class="section-title">Built for <em>growth</em></h2>
-    <p class="section-sub">Three core offerings, each designed to extract maximum value from your content.</p>
+    <p class="section-sub">Capabilities that scale your voice and convert your audience. Handled as a complete system.</p>
+
+    <!-- FLAGSHIP OFFER CARD -->
+    <div class="flagship-card reveal">
+      <div class="flagship-glow"></div>
+      <div class="flagship-left">
+        <div>
+          <span class="vid-type" style="background: rgba(232, 201, 122, 0.12); border-color: rgba(232, 201, 122, 0.3); color: var(--c-accent); font-weight: 600;">Flagship Offer</span>
+          <h3 class="svc-title" style="font-size: 2.2rem; margin-top: 0.75rem; margin-bottom: 0.75rem;">Founder Content Engine™</h3>
+          <p class="svc-desc" style="font-size: 0.95rem; max-width: 52ch; margin-bottom: 1.5rem; line-height: 1.6;">A complete hands-off system designed for startup founders, coaches, and SaaS creators. Send me one long-form podcast or video, and get a month's worth of high-converting, authority-building short-form clips. Fully scripted, edited, hook-optimized, and styled.</p>
+        </div>
+        <div>
+          <ul class="flagship-features">
+            <li><span style="color: var(--c-accent);">✔</span> 20 High-Retention Clips</li>
+            <li><span style="color: var(--c-accent);">✔</span> Hook & Captions Optimization</li>
+            <li><span style="color: var(--c-accent);">✔</span> 4 Stacked Bonuses Included</li>
+            <li><span style="color: var(--c-accent);">✔</span> Fast Delivery Guarantee</li>
+          </ul>
+          <a href="offer.html" class="btn-primary" style="padding: 0.8rem 1.8rem; display: inline-block;">Explore the Offer Details &rarr;</a>
+        </div>
+      </div>
+      <div class="flagship-right">
+        <div style="font-family: var(--mono); font-size: 0.65rem; color: var(--c-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Capacity Cap</div>
+        <div class="stat-num" style="font-size: 3.5rem; color: var(--c-accent); margin-bottom: 0.25rem;">2<span style="font-size: 1.8rem; color: var(--c-muted);">/5</span></div>
+        <div style="font-family: var(--sans); font-size: 0.85rem; color: var(--c-text); opacity: 0.9; margin-bottom: 1.25rem;">Client spots available for June</div>
+        <div style="font-family: var(--mono); font-size: 0.65rem; color: var(--c-muted); line-height: 1.5;">To maintain extreme production quality and support high-growth distribution, I limit active retainers.</div>
+      </div>
+    </div>
+
     <div class="services-grid">
       <div class="service-card reveal">
         <div class="svc-num">01</div>
@@ -1541,6 +1636,7 @@
   <footer>
     <span class="footer-copy">© 2025 Divy Jain. All rights reserved.</span>
     <ul class="footer-links">
+      <li><a href="offer.html" style="color: var(--c-accent); font-weight: 500;">Founder Content Engine</a></li>
       <li><a href="https://instagram.com/jn.divy" target="_blank">Instagram</a></li>
       <li><a href="https://www.linkedin.com/in/divyj913" target="_blank">LinkedIn</a></li>
       <li><a href="#work">Work</a></li>

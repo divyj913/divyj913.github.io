@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Founder Content Engine — Divy Jain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --c-bg: #0a0a0a;
+      --c-bg2: #111111;
+      --c-bg3: #1a1a1a;
+      --c-text: #f0ede6;
+      --c-muted: #888880;
+      --c-accent: #e8c97a;
+      --c-accent2: #c8824a;
+      --c-line: rgba(240, 237, 230, 0.08);
+      --c-line2: rgba(240, 237, 230, 0.15);
+      --serif: 'DM Serif Display', serif;
+      --sans: 'Instrument Sans', sans-serif;
+      --mono: 'DM Mono', monospace;
+      --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      cursor: none
+    }
+
+    body {
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Cursor */
+    .cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--c-accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s;
+      mix-blend-mode: difference;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(232, 201, 122, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.35s var(--ease), height 0.35s var(--ease);
+    }
+
+    .cursor.expand {
+      width: 20px;
+      height: 20px;
+    }
+
+    .cursor-ring.expand {
+      width: 60px;
+      height: 60px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(10, 10, 10, 0.95) 0%, transparent 100%);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      color: var(--c-text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-logo span {
+      color: var(--c-accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--c-muted);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--c-text);
+    }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      border: 1px solid rgba(232, 201, 122, 0.3);
+      padding: 0.55rem 1.2rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--c-accent);
+      color: #0a0a0a;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 8rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: #0a0a0a;
+      overflow: hidden;
+    }
+
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(10, 10, 10, 0.9) 100%);
+    }
+
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      max-width: 950px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--c-accent);
+      opacity: 0.5;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      color: var(--c-text);
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--c-accent);
+    }
+
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: 1.15rem;
+      color: var(--c-muted);
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--c-accent);
+      color: #0a0a0a;
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232, 201, 122, 0.25);
+    }
+
+    .btn-secondary {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--c-line2);
+      color: var(--c-text);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--c-muted);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* SHARED SECTION */
+    section {
+      padding: 8rem 3rem;
+      border-top: 1px solid var(--c-line);
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-tag::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--c-accent);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      max-width: 750px;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--c-accent);
+    }
+
+    .section-sub {
+      color: var(--c-muted);
+      max-width: 580px;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 3rem;
+    }
+
+    /* THE SYSTEM */
+    #system {
+      background: var(--c-bg);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .deliverables {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .deliv-card {
+      background: var(--c-bg2);
+      border: 1px solid var(--c-line);
+      padding: 2rem;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+
+    .deliv-card:hover {
+      border-color: rgba(232, 201, 122, 0.3);
+    }
+
+    .deliv-num {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--c-accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .deliv-title {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: var(--c-text);
+    }
+
+    .deliv-desc {
+      font-size: 0.88rem;
+      color: var(--c-muted);
+      line-height: 1.6;
+    }
+
+    /* VALUE STACK (BONUSES) */
+    #bonuses {
+      background: var(--c-bg2);
+      position: relative;
+    }
+
+    .bonus-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .bonus-card {
+      background: var(--c-bg3);
+      border: 1px solid var(--c-line);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bonus-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .bonus-tag {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      background: rgba(232, 201, 122, 0.1);
+      border: 1px solid rgba(232, 201, 122, 0.2);
+      color: var(--c-accent);
+      padding: 0.2rem 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .bonus-val {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--c-muted);
+      text-decoration: line-through;
+    }
+
+    .bonus-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--c-text);
+    }
+
+    .bonus-desc {
+      font-size: 0.88rem;
+      color: var(--c-muted);
+      line-height: 1.6;
+    }
+
+    .total-stack-box {
+      border: 1px solid var(--c-accent);
+      background: rgba(232, 201, 122, 0.02);
+      padding: 2.5rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .total-stack-box h4 {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--c-text);
+      margin-bottom: 0.5rem;
+    }
+
+    .total-stack-box p {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--c-accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* GUARANTEE Box */
+    .guarantee-section {
+      background: var(--c-bg);
+      padding: 6rem 3rem;
+    }
+
+    .guarantee-box {
+      border: 1px solid var(--c-accent2);
+      background: linear-gradient(135deg, rgba(200, 130, 74, 0.05) 0%, transparent 100%);
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      position: relative;
+    }
+
+    .guarantee-badge {
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+      border: 2px dashed var(--c-accent2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      color: var(--c-accent2);
+      transform: rotate(-15deg);
+    }
+
+    .guarantee-content h3 {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--c-text);
+      margin-bottom: 1rem;
+    }
+
+    .guarantee-content p {
+      color: var(--c-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* PRICING */
+    #pricing {
+      background: var(--c-bg2);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .price-card {
+      background: var(--c-bg);
+      border: 1px solid var(--c-line);
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .price-card:hover {
+      border-color: rgba(240, 237, 230, 0.2);
+    }
+
+    .price-card.featured {
+      border-color: var(--c-accent);
+      background: var(--c-bg3);
+      transform: scale(1.03);
+    }
+
+    .price-badge {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: #0a0a0a;
+      background: var(--c-accent);
+      padding: 0.25rem 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .price-tier {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      margin-bottom: 1rem;
+    }
+
+    .price-amt {
+      font-family: var(--serif);
+      font-size: 3rem;
+      color: var(--c-text);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-amt span {
+      font-size: 1rem;
+      font-family: var(--sans);
+      color: var(--c-muted);
+    }
+
+    .price-desc {
+      font-size: 0.85rem;
+      color: var(--c-muted);
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .price-features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .price-features li {
+      font-size: 0.88rem;
+      color: var(--c-text);
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .price-features li span {
+      color: var(--c-accent);
+    }
+
+    .price-cta {
+      margin-top: auto;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* FAQ */
+    #faq {
+      background: var(--c-bg);
+    }
+
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--c-line);
+      padding: 2rem 0;
+    }
+
+    .faq-question {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      color: var(--c-text);
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      color: var(--c-muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    /* CONTACT / URGENCE */
+    #contact {
+      background: var(--c-bg2);
+      text-align: center;
+      padding: 8rem 3rem;
+    }
+
+    .contact-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .scarcity-alert {
+      border: 1px solid rgba(200, 130, 74, 0.4);
+      background: rgba(200, 130, 74, 0.05);
+      color: var(--c-accent2);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.5rem 1rem;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .contact-card {
+      background: var(--c-bg);
+      border: 1px solid var(--c-line);
+      padding: 3rem 2.5rem;
+      margin-top: 3rem;
+    }
+
+    .contact-card h4 {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-card p {
+      font-size: 0.9rem;
+      color: var(--c-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-info-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .contact-btn {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--c-accent);
+      color: #0a0a0a;
+      padding: 1.1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+    }
+
+    .contact-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232, 201, 122, 0.25);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2.5rem 3rem;
+      border-top: 1px solid var(--c-line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--c-bg);
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--c-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--c-text);
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:900px) {
+      nav {
+        padding: 1.25rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .bonus-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .price-card.featured {
+        transform: none;
+      }
+
+      .guarantee-box {
+        flex-direction: column;
+        padding: 2.5rem;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      section {
+        padding: 5rem 1.5rem;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="portfolio.html" class="nav-logo">Divy <span>Jain</span></a>
+    <ul class="nav-links">
+      <li><a href="portfolio.html#work">Work</a></li>
+      <li><a href="#system">The System</a></li>
+      <li><a href="#bonuses">Stacked Bonuses</a></li>
+      <li><a href="#pricing">Pricing Retainers</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Apply</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Apply Now</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg">
+      <div class="hero-vignette"></div>
+      <div class="hero-noise"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Flagship Offer Package</div>
+      <h1 class="hero-title">
+        The Founder<br>
+        <em>Content Engine</em>
+      </h1>
+      <p class="hero-sub">Get 20+ high-retention, authority-building clips engineered to convert viewers into leads. Handled completely end-to-end. You record, I edit and optimize.</p>
+      <div class="hero-ctas">
+        <a href="#pricing" class="btn-primary">View Retainers</a>
+        <a href="#system" class="btn-secondary">How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE SYSTEM -->
+  <section id="system">
+    <div class="grid-2">
+      <div>
+        <div class="section-tag">The Workflow</div>
+        <h2 class="section-title">One podcast.<br><em>A month of authority.</em></h2>
+        <p class="section-sub">Instead of chasing video editors and spending hours scripting, you send one long-form audio/video recording. I extract, refine, and pack it into high-converting assets.</p>
+      </div>
+      <div class="deliverables">
+        <div class="deliv-card reveal">
+          <div class="deliv-num">01</div>
+          <h3 class="deliv-title">High-Value Extraction</h3>
+          <p class="deliv-desc">I review the long-form content, identifying the absolute best value bombs, insights, and stories. No boring fluff, only the highest retention segments.</p>
+        </div>
+        <div class="deliv-card reveal">
+          <div class="deliv-num">02</div>
+          <h3 class="deliv-title">Hook & Flow Optimization</h3>
+          <p class="deliv-desc">I write high-impact custom hooks tailored to open your videos. Every clip is tightly structured using a proven Hook-Body-Ending flow to prevent drop-off.</p>
+        </div>
+        <div class="deliv-card reveal">
+          <div class="deliv-num">03</div>
+          <h3 class="deliv-title">Premium Minimalist Editing</h3>
+          <p class="deliv-desc">Precise pacing, sound effects, B-roll, custom color grading, and modern caption styling that matches your brand guidelines. No cheesy emojis, just premium output.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE STACK (BONUSES) -->
+  <section id="bonuses">
+    <div class="section-tag">Value Stack</div>
+    <h2 class="section-title">Stacked bonuses to<br><em>accelerate your growth</em></h2>
+    <p class="section-sub">Hormozi style: I stacked these high-value systems onto the retainers to ensure your content converts into business opportunities. Yours free with the Growth and Authority retainers.</p>
+
+    <div class="bonus-grid">
+      <div class="bonus-card reveal">
+        <div class="bonus-header">
+          <span class="bonus-tag">Bonus #1</span>
+          <span class="bonus-val">Worth ₹5,000</span>
+        </div>
+        <h3 class="bonus-title">30 Viral Hook Library</h3>
+        <p class="bonus-desc">A curated database of tested, high-performing hooks customized for your specific niche. You'll never get stuck starting a video recording again.</p>
+      </div>
+
+      <div class="bonus-card reveal">
+        <div class="bonus-header">
+          <span class="bonus-tag">Bonus #2</span>
+          <span class="bonus-val">Worth ₹10,000</span>
+        </div>
+        <h3 class="bonus-title">Monthly Strategy Sync</h3>
+        <p class="bonus-desc">A monthly 30-minute private call. We audit recent performance, identify visual and messaging shifts, and map out the content structure for the upcoming month.</p>
+      </div>
+
+      <div class="bonus-card reveal">
+        <div class="bonus-header">
+          <span class="bonus-tag">Bonus #3</span>
+          <span class="bonus-val">Worth ₹7,500</span>
+        </div>
+        <h3 class="bonus-title">Clip Selection Service</h3>
+        <p class="bonus-desc">Never spend hours scanning timestamps again. You upload your podcast or long-form file, and I will scan and isolate the optimal high-impact clips for you.</p>
+      </div>
+
+      <div class="bonus-card reveal">
+        <div class="bonus-header">
+          <span class="bonus-tag">Bonus #4</span>
+          <span class="bonus-val">Worth ₹10,000</span>
+        </div>
+        <h3 class="bonus-title">LinkedIn Post Repurposing</h3>
+        <p class="bonus-desc">Every short-form video script is rewritten as an engaging, platform-native written LinkedIn text post. Double your distribution with zero extra recording.</p>
+      </div>
+    </div>
+
+    <div class="total-stack-box reveal">
+      <h4>₹32,500+ in Bonus Value</h4>
+      <p>Included 100% Free inside Growth and Authority Tiers</p>
+    </div>
+  </section>
+
+  <!-- GUARANTEE -->
+  <section class="guarantee-section">
+    <div class="guarantee-box reveal">
+      <div class="guarantee-badge">GUARANTEE</div>
+      <div class="guarantee-content">
+        <h3>The Fast Delivery Guarantee</h3>
+        <p>I know video production bottlenecks kill content calendars. If I miss our agreed delivery deadline for any batch of clips, I will edit <strong>5 additional clips completely free of charge</strong>. No excuses. I take the delivery risk so you don't have to.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="section-tag">Investment</div>
+    <h2 class="section-title">Clear, outcome-based<br><em>retainer tiers</em></h2>
+    <p class="section-sub">No hourly rates, no hidden fees. Simple monthly packages sized for where your brand is today.</p>
+
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="price-card reveal">
+        <div class="price-tier">Starter</div>
+        <div class="price-amt">₹25,000<span>/mo</span></div>
+        <p class="price-desc">Perfect for testing short-form channels and building baseline authority.</p>
+        <ul class="price-features">
+          <li><span>✔</span> 10 Short-Form Clips / mo</li>
+          <li><span>✔</span> Hook & Flow Optimization</li>
+          <li><span>✔</span> Standard Editorial Cut</li>
+          <li><span>✔</span> Minimalist Brand Captions</li>
+          <li><span>✔</span> Standard Sound Design</li>
+          <li><span>✔</span> 7-Day Turnaround Batches</li>
+          <li style="opacity: 0.4;"><span>✘</span> Access to 4 Stacked Bonuses</li>
+        </ul>
+        <a href="#contact" class="btn-secondary price-cta">Secure Starter Slot</a>
+      </div>
+
+      <!-- Growth -->
+      <div class="price-card featured reveal">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-tier" style="color: var(--c-accent);">Growth</div>
+        <div class="price-amt">₹50,000<span>/mo</span></div>
+        <p class="price-desc">A complete distribution system. Scale your authority across channels daily.</p>
+        <ul class="price-features">
+          <li><span>✔</span> <strong>20 Short-Form Clips</strong> / mo</li>
+          <li><span>✔</span> Premium Minimalist Editing</li>
+          <li><span>✔</span> High-Energy Transitions & B-roll</li>
+          <li><span>✔</span> Full Sound Design & Music Sync</li>
+          <li><span>✔</span> <strong>All 4 Stacked Bonuses</strong> Included</li>
+          <li><span>✔</span> LinkedIn Post Repurposing</li>
+          <li><span>✔</span> Priority Slack Communication</li>
+          <li><span>✔</span> 7-Day Turnaround Batches</li>
+        </ul>
+        <a href="#contact" class="btn-primary price-cta">Secure Growth Slot</a>
+      </div>
+
+      <!-- Authority -->
+      <div class="price-card reveal">
+        <div class="price-tier">Authority</div>
+        <div class="price-amt">₹75,000<span>/mo</span></div>
+        <p class="price-desc">The ultimate content machine. Command the market and drive maximum inbound leads.</p>
+        <ul class="price-features">
+          <li><span>✔</span> <strong>30 Short-Form Clips</strong> / mo</li>
+          <li><span>✔</span> Priority 72-Hour Turnaround</li>
+          <li><span>✔</span> Custom High-CTR Thumbnail Design</li>
+          <li><span>✔</span> Weekly Content Strategy Syncs</li>
+          <li><span>✔</span> <strong>All 4 Stacked Bonuses</strong> Included</li>
+          <li><span>✔</span> Custom Native Captions & Graphics</li>
+          <li><span>✔</span> Raw Footage Upload Storage</li>
+          <li><span>✔</span> Unlimited Revisions (Priority)</li>
+        </ul>
+        <a href="#contact" class="btn-secondary price-cta">Secure Authority Slot</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-tag">Clarifications</div>
+    <h2 class="section-title">Frequently asked<br><em>questions</em></h2>
+    <p class="section-sub">Addressing concerns before we get to work. Open, honest expectations.</p>
+
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-question">Who selects the clip highlights?</div>
+        <div class="faq-answer">For the Growth and Authority retainers, I handle this completely. You upload the long-form file, and I scan it for high-value hooks, points, and stories. For the Starter tier, you provide the timestamps for the segments you want edited.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <div class="faq-question">What is the onboarding process like?</div>
+        <div class="faq-answer">We jump on a 30-minute kickoff call to align on your brand identity, color palettes, caption typography, and ideal client targets. Then, we set up a shared Google Drive/Frame.io folder. You drop files in, and the engine runs.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <div class="faq-question">How does the guarantee work?</div>
+        <div class="faq-answer">We agree on a delivery schedule (e.g. 5 clips every Monday). If a delivery is late by even an hour, you automatically get 5 additional clips added to your library for free. This holds me accountable to your posting consistency.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <div class="faq-question">Are there other formats or packages available?</div>
+        <div class="faq-answer">I specialize in high-ticket long-term relationships for the Founder Content Engine. However, if you require cinematic documentaries or long-form edits, we can discuss custom project rates during our strategy call.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / SCARCITY -->
+  <section id="contact">
+    <div class="contact-inner">
+      <span class="scarcity-alert">Urgency: Only 3 Retainer Spots Remaining for June</span>
+      <div class="section-tag" style="justify-content: center;">Apply Now</div>
+      <h2 class="section-title" style="max-width: none;">Ready to build your<br><em>Content Engine?</em></h2>
+      <p class="section-sub" style="margin: 0 auto 2.5rem;">Let's establish your category of one. Apply below to secure your package slot and schedule our initial onboarding strategy call.</p>
+      
+      <div class="contact-card reveal">
+        <h4>Request a Strategy Call</h4>
+        <p>Let me know your current long-form content volume and which retainer tier fits your growth goals.</p>
+        <div class="contact-info-block">
+          <a href="mailto:divyj2006@gmail.com?subject=Founder%20Content%20Engine%20Application" class="contact-btn">Apply via Email</a>
+          <div style="font-family: var(--mono); font-size: 0.72rem; color: var(--c-muted); margin-top: 1rem;">
+            Direct inquiries: <a href="mailto:divyj2006@gmail.com" style="color: var(--c-accent); text-decoration: none;">divyj2006@gmail.com</a> | <a href="tel:+919929548972" style="color: var(--c-accent); text-decoration: none;">+91 99295 48972</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2025 Divy Jain. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="portfolio.html">Home</a></li>
+      <li><a href="portfolio.html#work">Work</a></li>
+      <li><a href="portfolio.html#about">About</a></li>
+      <li><a href="mailto:divyj2006@gmail.com">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+    function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); }
+    animRing();
+    document.querySelectorAll('a,button,.price-card,.bonus-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.classList.add('expand'); ring.classList.add('expand'); });
+      el.addEventListener('mouseleave', () => { cursor.classList.remove('expand'); ring.classList.remove('expand'); });
+    });
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+  </script>
+</body>
+
+</html>
