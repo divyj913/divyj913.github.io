@@ -1836,36 +1836,46 @@
       }
     }
 
-    /* WHO THIS IS FOR Checklist style */
+    /* WHO THIS IS FOR Checklist sliding style */
     .who-section {
-      padding: 3rem 0;
+      padding: 4rem 0;
       border-top: 1px solid var(--c-line);
+      border-bottom: 1px solid var(--c-line);
+      overflow: hidden;
       margin-top: 3rem;
+      position: relative;
     }
     .who-title {
       font-family: var(--serif);
       font-size: 1.8rem;
       color: var(--c-text);
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       text-align: center;
     }
+    .who-container {
+      display: flex;
+      width: max-content;
+      animation: who-slide 25s linear infinite;
+    }
+    .who-container:hover {
+      animation-play-state: paused;
+    }
     .who-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      display: flex;
       gap: 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
+      padding: 0 0.75rem;
     }
     .who-card {
       background: var(--c-bg);
       border: 1px solid var(--c-line);
-      padding: 1.5rem;
+      padding: 1.5rem 3rem;
       text-align: center;
-      transition: border-color 0.3s, transform 0.3s;
+      transition: border-color 0.3s;
+      flex-shrink: 0;
+      width: 250px;
     }
     .who-card:hover {
       border-color: var(--c-accent);
-      transform: translateY(-2px);
     }
     .who-check {
       color: var(--c-accent);
@@ -1880,15 +1890,12 @@
       text-transform: uppercase;
       color: var(--c-text);
     }
-    @media (max-width: 900px) {
-      .who-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+    @keyframes who-slide {
+      0% {
+        transform: translateX(0);
       }
-    }
-    @media (max-width: 600px) {
-      .who-grid {
-        grid-template-columns: 1fr;
+      100% {
+        transform: translateX(-50%);
       }
     }
 
@@ -2193,26 +2200,51 @@
     <!-- WHO THIS IS FOR -->
     <div class="who-section reveal">
       <h3 class="who-title">Perfect For</h3>
-      <div class="who-grid">
-        <div class="who-card">
-          <span class="who-check">✓</span>
-          <span class="who-name">Startup Founders</span>
+      <div class="who-container">
+        <div class="who-grid">
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Startup Founders</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Agency Owners</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Coaches</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Educators</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Personal Brands</span>
+          </div>
         </div>
-        <div class="who-card">
-          <span class="who-check">✓</span>
-          <span class="who-name">Agency Owners</span>
-        </div>
-        <div class="who-card">
-          <span class="who-check">✓</span>
-          <span class="who-name">Coaches</span>
-        </div>
-        <div class="who-card">
-          <span class="who-check">✓</span>
-          <span class="who-name">Educators</span>
-        </div>
-        <div class="who-card">
-          <span class="who-check">✓</span>
-          <span class="who-name">Personal Brands</span>
+        <!-- Duplicate for infinite scroll -->
+        <div class="who-grid">
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Startup Founders</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Agency Owners</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Coaches</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Educators</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Personal Brands</span>
+          </div>
         </div>
       </div>
     </div>
