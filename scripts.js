@@ -314,4 +314,32 @@ if (typeAudit && typeCall && videoLinkGroup && formLink && submitBtn) {
   typeCall.addEventListener('change', toggleLinkField);
 }
 
+// FAQ Accordion Toggling
+document.querySelectorAll('.faq-item').forEach(item => {
+  const question = item.querySelector('.faq-question');
+  const answer = item.querySelector('.faq-answer');
+  if (question && answer) {
+    question.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      
+      // Close other active FAQ items
+      document.querySelectorAll('.faq-item').forEach(otherItem => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('active');
+          const otherAns = otherItem.querySelector('.faq-answer');
+          if (otherAns) otherAns.style.maxHeight = null;
+        }
+      });
+      
+      item.classList.toggle('active');
+      if (!isActive) {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      } else {
+        answer.style.maxHeight = null;
+      }
+    });
+  }
+});
+
+
 

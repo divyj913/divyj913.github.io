@@ -1242,23 +1242,54 @@ section {
 
 .faq-item {
   border-bottom: 1px solid var(--c-line);
-  padding: 2rem 0;
+  padding: 1.5rem 0;
 }
 
 .faq-question {
   font-family: var(--serif);
   font-size: 1.3rem;
   color: var(--c-text);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+  padding: 0.5rem 0;
+}
+
+.faq-question:hover {
+  color: var(--c-accent);
+}
+
+.faq-question::after {
+  content: '+';
+  font-family: var(--sans);
+  font-size: 1.5rem;
+  color: var(--c-accent);
+  transition: transform 0.3s ease;
+  line-height: 1;
+}
+
+.faq-item.active .faq-question::after {
+  content: '−';
 }
 
 .faq-answer {
   color: var(--c-muted);
   font-size: 0.92rem;
   line-height: 1.7;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.25s ease, margin-top 0.35s ease;
+  margin-top: 0;
+}
+
+.faq-item.active .faq-answer {
+  opacity: 1;
+  margin-top: 0.75rem;
 }
 
 /* ─── SCARCITY / CONTACT ─── */
