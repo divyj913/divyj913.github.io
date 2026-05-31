@@ -238,15 +238,19 @@ if (auditForm && formStatus) {
   auditForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const keyInput = document.getElementById('web3forms_key');
+    const isCall = document.getElementById('typeCall')?.checked;
+    
     if (keyInput && keyInput.value === 'YOUR_ACCESS_KEY_HERE') {
-      formStatus.innerText = "Success! (Mock Submission - Please replace YOUR_ACCESS_KEY_HERE with your Web3Forms key in contact.html)";
+      formStatus.innerText = isCall 
+        ? "Success! Call Request Received. (Mock Submission - Please replace YOUR_ACCESS_KEY_HERE with your Web3Forms key)"
+        : "Success! Audit Application Received. (Mock Submission - Please replace YOUR_ACCESS_KEY_HERE with your Web3Forms key)";
       formStatus.style.display = 'block';
       formStatus.style.color = 'var(--c-accent)';
       auditForm.reset();
       return;
     }
     
-    formStatus.innerText = "Submitting your application...";
+    formStatus.innerText = isCall ? "Sending your call request..." : "Submitting your application...";
     formStatus.style.display = 'block';
     formStatus.style.color = 'var(--c-muted)';
     
@@ -260,9 +264,21 @@ if (auditForm && formStatus) {
         }
       });
       if (response.ok) {
-        formStatus.innerText = "Thank you! Your audit application has been received. Our team will get back to you within 48 hours.";
+        formStatus.innerText = isCall 
+          ? "Thank you! Your strategy call request has been received. Our team will email you a booking link within 48 hours."
+          : "Thank you! Your audit application has been received. Our team will get back to you within 48 hours.";
         formStatus.style.color = 'var(--c-accent)';
         auditForm.reset();
+        
+        // Reset the form view state back to audit
+        const videoLinkGroup = document.getElementById('videoLinkGroup');
+        const formLink = document.getElementById('formLink');
+        const submitBtn = document.getElementById('submitBtn');
+        if (videoLinkGroup && formLink && submitBtn) {
+          videoLinkGroup.style.display = 'flex';
+          formLink.required = true;
+          submitBtn.innerText = "Submit Audit Application";
+        }
       } else {
         const data = await response.json();
         formStatus.innerText = data.message || "Oops! There was a problem submitting your application.";
@@ -274,4 +290,28 @@ if (auditForm && formStatus) {
     }
   });
 }
+
+// Form Inquiry Type Toggling
+const typeAudit = document.getElementById('typeAudit');
+const typeCall = document.getElementById('typeCall');
+const videoLinkGroup = document.getElementById('videoLinkGroup');
+const formLink = document.getElementById('formLink');
+const submitBtn = document.getElementById('submitBtn');
+
+if (typeAudit && typeCall && videoLinkGroup && formLink && submitBtn) {
+  const toggleLinkField = () => {
+    if (typeCall.checked) {
+      videoLinkGroup.style.display = 'none';
+      formLink.required = false;
+      submitBtn.innerText = "Request Strategy Call";
+    } else {
+      videoLinkGroup.style.display = 'flex';
+      formLink.required = true;
+      submitBtn.innerText = "Submit Audit Application";
+    }
+  };
+  typeAudit.addEventListener('change', toggleLinkField);
+  typeCall.addEventListener('change', toggleLinkField);
+}
+
 

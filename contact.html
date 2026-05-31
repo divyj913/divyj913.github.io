@@ -94,6 +94,18 @@
             </div>
             
             <div class="form-group">
+              <label style="margin-bottom: 0.25rem;">How would you like to start?</label>
+              <div class="radio-group" style="display: flex; gap: 1.5rem; margin-top: 0.25rem;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--sans); font-size: 0.9rem; text-transform: none; letter-spacing: normal; color: var(--c-text); cursor: pointer; font-weight: normal;">
+                  <input type="radio" name="inquiry_type" value="Free Audit" checked id="typeAudit" style="accent-color: var(--c-accent); cursor: pointer;"> Get 3 Free Content Ideas
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--sans); font-size: 0.9rem; text-transform: none; letter-spacing: normal; color: var(--c-text); cursor: pointer; font-weight: normal;">
+                  <input type="radio" name="inquiry_type" value="Book Call" id="typeCall" style="accent-color: var(--c-accent); cursor: pointer;"> Book a Strategy Call
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group" id="videoLinkGroup">
               <label for="formLink">Link to Latest Video / Podcast</label>
               <input type="url" id="formLink" name="video_link" required class="form-input" placeholder="https://youtube.com/watch?...">
             </div>
@@ -103,7 +115,7 @@
               <textarea id="formMessage" name="message" class="form-input" rows="3" placeholder="Tell us about your brand or specific distribution goals..."></textarea>
             </div>
             
-            <button type="submit" class="contact-btn" style="border: none; cursor: pointer; width: 100%; text-align: center;">Submit Audit Application</button>
+            <button type="submit" id="submitBtn" class="contact-btn" style="border: none; cursor: pointer; width: 100%; text-align: center;">Submit Audit Application</button>
             <div id="formStatus" class="form-status"></div>
           </form>
           
