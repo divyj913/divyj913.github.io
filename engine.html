@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Founder Content Engine — Divy Jain</title>
+  <link rel="icon" href="DJ.jpeg" type="image/jpeg" />
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('divy-theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Divy <span>Jain</span></a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="engine.html" style="color: var(--c-accent); font-weight: 700;">Founder Content Engine</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="pricing.html">Retainers</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="about.html">About</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+      <a href="contact.html" class="nav-cta">Claim Your Free Audit</a>
+    </div>
+  </nav>
+
+  <!-- THE SYSTEM -->
+  <section id="system" style="padding-top: 10rem;">
+    <div class="grid-2">
+      <div>
+        <div class="section-tag">The Workflow</div>
+        <h2 class="section-title">One podcast.<br><em>A month of authority.</em></h2>
+        <p class="section-sub">Instead of chasing freelance video editors and spending hours writing scripts, you send me one long-form audio or video recording. I extract, optimize, edit, and deliver ready-to-post growth assets.</p>
+      </div>
+      <div class="deliverables">
+        <div class="deliv-card reveal">
+          <div class="deliv-num">01</div>
+          <h3 class="deliv-title">High-Value Extraction</h3>
+          <p class="deliv-desc">I scan your podcast or long-form video, identifying the absolute best value bombs, high-impact stories, and insights. No boring fluff, only the highest retention clips.</p>
+        </div>
+        <div class="deliv-card reveal">
+          <div class="deliv-num">02</div>
+          <h3 class="deliv-title">Hook & Flow Optimization</h3>
+          <p class="deliv-desc">I write punchy custom hooks tailored to immediately grab attention in the first 3 seconds. Every clip is tightly structured using a proven Hook-Body-Ending format to prevent drop-off.</p>
+        </div>
+        <div class="deliv-card reveal">
+          <div class="deliv-num">03</div>
+          <h3 class="deliv-title">Premium Minimalist Editing</h3>
+          <p class="deliv-desc">Precise pacing, sound effects, motion graphics, relevant B-roll, custom color grading, and modern caption styling that matches your brand design. No overdone emojis, just high-end authority content.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES / CAPABILITIES -->
+  <section id="services">
+    <div class="section-tag">What I Do</div>
+    <h2 class="section-title">Built for <em>growth</em></h2>
+    <p class="section-sub">Capabilities that scale your voice and convert your audience. Handled as a complete system.</p>
+
+    <!-- FLAGSHIP OFFER CARD -->
+    <div class="flagship-card reveal">
+      <div class="flagship-glow"></div>
+      <div class="flagship-left">
+        <div>
+          <span class="vid-type"
+            style="background: rgba(var(--c-accent-rgb), 0.12); border-color: rgba(var(--c-accent-rgb), 0.3); color: var(--c-accent); font-weight: 600;">Flagship Offer</span>
+          <h3 class="svc-title" style="font-size: 2.2rem; margin-top: 0.75rem; margin-bottom: 0.75rem;">Founder Content Engine™</h3>
+          <p class="svc-desc" style="font-size: 0.95rem; max-width: 52ch; margin-bottom: 1.5rem; line-height: 1.6;">A complete hands-off system designed for startup founders, coaches, and SaaS creators. Send me one long-form podcast or video, and get a month's worth of high-converting, authority-building short-form clips. Fully scripted, edited, hook-optimized, and styled.</p>
+        </div>
+        <div>
+          <ul class="flagship-features">
+            <li><span style="color: var(--c-accent);">✔</span> 20 High-Retention Clips</li>
+            <li><span style="color: var(--c-accent);">✔</span> Hook & Captions Optimization</li>
+            <li><span style="color: var(--c-accent);">✔</span> 4 Stacked Bonuses Included</li>
+            <li><span style="color: var(--c-accent);">✔</span> Fast Delivery Guarantee</li>
+          </ul>
+          <a href="pricing.html" class="btn-primary" style="padding: 0.8rem 1.8rem; display: inline-block;">Explore Offer Details &rarr;</a>
+        </div>
+      </div>
+      <div class="flagship-right">
+        <div style="font-family: var(--mono); font-size: 0.65rem; color: var(--c-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Capacity Cap</div>
+        <div class="stat-num" style="font-size: 3.5rem; color: var(--c-accent); margin-bottom: 0.25rem;">2<span style="font-size: 1.8rem; color: var(--c-muted);">/5</span></div>
+        <div style="font-family: var(--sans); font-size: 0.85rem; color: var(--c-text); opacity: 0.9; margin-bottom: 1.25rem;">Client spots available for June</div>
+        <div style="font-family: var(--mono); font-size: 0.65rem; color: var(--c-muted); line-height: 1.5;">To maintain extreme production quality and support high-growth distribution, I limit active retainers.</div>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="svc-num">01</div>
+        <h3 class="svc-title">Content Curation</h3>
+        <p class="svc-desc">Verbatim pulls with hooks that raise questions without answering them. Every clip under 45 seconds, every frame earned.</p>
+        <ul class="svc-list">
+          <li>Hook / Body / Ending structure</li>
+          <li>HVZ high-value-zone scanning</li>
+          <li>Vertical & horizontal formats</li>
+          <li>48-hour turnaround</li>
+        </ul>
+      </div>
+      <div class="service-card reveal">
+        <div class="svc-num">02</div>
+        <h3 class="svc-title">Talking Head & Short-Form</h3>
+        <p class="svc-desc">Clean, editorial talking-head edits built for retention — from single-speaker shorts to interview-style reels.</p>
+        <ul class="svc-list">
+          <li>Minimalist caption design</li>
+          <li>Jump-cut flow optimisation</li>
+          <li>Music & SFX sync</li>
+          <li>Platform-native delivery</li>
+        </ul>
+      </div>
+      <div class="service-card reveal">
+        <div class="svc-num">03</div>
+        <h3 class="svc-title">Cinematic & Montage Edits</h3>
+        <p class="svc-desc">High-pace trailer cuts and documentary-style long-form edits — pacing, grade, and sound design aligned to make an impact.</p>
+        <ul class="svc-list">
+          <li>Beat-sync & kinetic cuts</li>
+          <li>Colour grading & treatment</li>
+          <li>Full sound design</li>
+          <li>Multi-platform delivery</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- WHO THIS IS FOR -->
+    <div class="who-section reveal">
+      <h3 class="who-title">Perfect For</h3>
+      <div class="who-container">
+        <div class="who-grid">
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Startup Founders</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Agency Owners</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Coaches</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Educators</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Personal Brands</span>
+          </div>
+        </div>
+        <!-- Duplicate for infinite scroll -->
+        <div class="who-grid">
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Startup Founders</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Agency Owners</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Coaches</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Educators</span>
+          </div>
+          <div class="who-card">
+            <span class="who-check">✓</span>
+            <span class="who-name">Personal Brands</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 Divy Jain. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="engine.html" style="color: var(--c-accent); font-weight: 500;">Founder Content Engine</a></li>
+      <li><a href="https://instagram.com/jn.divy" target="_blank">Instagram</a></li>
+      <li><a href="https://www.linkedin.com/in/divyj913" target="_blank">LinkedIn</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+
+</html>

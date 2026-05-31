@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retainer Pricing & Packages — Divy Jain</title>
+  <link rel="icon" href="DJ.jpeg" type="image/jpeg" />
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('divy-theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Divy <span>Jain</span></a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="engine.html">Founder Content Engine</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="pricing.html" style="color: var(--c-accent); font-weight: 700;">Retainers</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="about.html">About</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+      <a href="contact.html" class="nav-cta">Claim Your Free Audit</a>
+    </div>
+  </nav>
+
+  <!-- PRICING -->
+  <section id="pricing" style="padding-top: 10rem;">
+    <div class="section-tag">Investment</div>
+    <h2 class="section-title">Clear, outcome-based<br><em>retainer tiers</em></h2>
+    <p class="section-sub">No hourly rates, no hidden fees. Simple monthly packages sized for where your brand is today.</p>
+
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="price-card reveal">
+        <div class="price-tier">Starter</div>
+        <div class="price-amt">$300<span>/mo</span></div>
+        <p class="price-desc">Perfect for testing short-form channels and building baseline authority.</p>
+        <ul class="price-features">
+          <li><span>✔</span> 10 Short-Form Clips / mo</li>
+          <li><span>✔</span> Hook & Flow Optimization</li>
+          <li><span>✔</span> Standard Editorial Cut</li>
+          <li><span>✔</span> Minimalist Brand Captions</li>
+          <li><span>✔</span> Standard Sound Design</li>
+          <li><span>✔</span> 7-Day Turnaround Batches</li>
+          <li style="opacity: 0.4;"><span>✘</span> Access to 4 Stacked Bonuses</li>
+        </ul>
+        <a href="contact.html" class="btn-secondary price-cta">Secure Starter Slot</a>
+      </div>
+
+      <!-- Growth -->
+      <div class="price-card featured reveal">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-tier" style="color: var(--c-accent);">Growth</div>
+        <div class="price-amt">$600<span>/mo</span></div>
+        <p class="price-desc">A complete distribution system. Scale your authority across channels daily.</p>
+        <ul class="price-features">
+          <li><span>✔</span> <strong>20 Short-Form Clips</strong> / mo</li>
+          <li><span>✔</span> Premium Minimalist Editing</li>
+          <li><span>✔</span> High-Energy Transitions & B-roll</li>
+          <li><span>✔</span> Full Sound Design & Music Sync</li>
+          <li><span>✔</span> <strong>All 4 Stacked Bonuses</strong> Included</li>
+          <li><span>✔</span> LinkedIn Post Repurposing</li>
+          <li><span>✔</span> Priority Slack Communication</li>
+          <li><span>✔</span> 7-Day Turnaround Batches</li>
+        </ul>
+        <a href="contact.html" class="btn-primary price-cta">Secure Growth Slot</a>
+      </div>
+
+      <!-- Authority -->
+      <div class="price-card reveal">
+        <div class="price-tier">Authority</div>
+        <div class="price-amt">$900<span>/mo</span></div>
+        <p class="price-desc">The ultimate content machine. Command the market and drive maximum inbound leads.</p>
+        <ul class="price-features">
+          <li><span>✔</span> <strong>30 Short-Form Clips</strong> / mo</li>
+          <li><span>✔</span> Priority 72-Hour Turnaround</li>
+          <li><span>✔</span> Custom High-CTR Thumbnail Design</li>
+          <li><span>✔</span> Weekly Content Strategy Syncs</li>
+          <li><span>✔</span> <strong>All 4 Stacked Bonuses</strong> Included</li>
+          <li><span>✔</span> Custom Native Captions & Graphics</li>
+          <li><span>✔</span> Raw Footage Upload Storage</li>
+          <li><span>✔</span> Unlimited Revisions (Priority)</li>
+        </ul>
+        <a href="contact.html" class="btn-secondary price-cta">Secure Authority Slot</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE STACK (BONUSES) -->
+  <section id="bonuses">
+    <div class="section-tag">Value Stack</div>
+    <h2 class="section-title">Stacked bonuses to<br><em>accelerate your growth</em></h2>
+    <p class="section-sub">I've stacked these high-value distribution assets onto the retainers to ensure your content converts into real business opportunities. These are included 100% free with the Growth and Authority retainers.</p>
+
+    <div class="bonus-grid">
+      <div class="bonus-card reveal">
+        <div class="bonus-header">
+          <span class="bonus-tag">Bonus #1</span>
+          <span class="bonus-val">Worth $60</span>
+        </div>
+        <h3 class="bonus-title">30 Viral Hook Library</h3>
+        <p class="bonus-desc">A curated database of tested, high-performing hooks customized for your specific niche. You'll never get stuck starting a video recording again.</p>
+      </div>
+
+      <div class="bonus-card reveal">
+        <div class="bonus-header">
+          <span class="bonus-tag">Bonus #2</span>
+          <span class="bonus-val">Worth $120</span>
+        </div>
+        <h3 class="bonus-title">Monthly Strategy Sync</h3>
+        <p class="bonus-desc">A monthly 30-minute private call. We audit recent performance, identify visual and messaging shifts, and map out the content structure for the upcoming month.</p>
+      </div>
+
+      <div class="bonus-card reveal">
+        <div class="bonus-header">
+          <span class="bonus-tag">Bonus #3</span>
+          <span class="bonus-val">Worth $90</span>
+        </div>
+        <h3 class="bonus-title">Clip Selection Service</h3>
+        <p class="bonus-desc">Never spend hours scanning timestamps again. You upload your podcast or long-form file, and I will scan and isolate the optimal high-impact clips for you.</p>
+      </div>
+
+      <div class="bonus-card reveal">
+        <div class="bonus-header">
+          <span class="bonus-tag">Bonus #4</span>
+          <span class="bonus-val">Worth $120</span>
+        </div>
+        <h3 class="bonus-title">LinkedIn Post Repurposing</h3>
+        <p class="bonus-desc">Every short-form video script is rewritten as an engaging, platform-native written LinkedIn text post. Double your distribution with zero extra recording.</p>
+      </div>
+    </div>
+
+    <div class="total-stack-box reveal">
+      <h4>$390+ in Bonus Value</h4>
+      <p>Included 100% Free inside Growth and Authority Retainer Tiers</p>
+    </div>
+  </section>
+
+  <!-- GUARANTEE -->
+  <section class="guarantee-section">
+    <div class="guarantee-box reveal">
+      <div class="guarantee-badge">GUARANTEE</div>
+      <div class="guarantee-content">
+        <h3>The Fast Delivery Guarantee</h3>
+        <p>I know video production bottlenecks kill content calendars. If I miss our agreed delivery deadline for any batch of clips, I will edit <strong>5 additional clips completely free of charge</strong>. No excuses. I take the delivery risk so you don't have to.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-tag">Clarifications</div>
+    <h2 class="section-title">Frequently asked<br><em>questions</em></h2>
+    <p class="section-sub">Addressing concerns before we get to work. Open, honest expectations.</p>
+
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-question">Who selects the clip highlights?</div>
+        <div class="faq-answer">For the Growth and Authority retainers, I handle this completely. You upload the long-form file, and I scan it for high-value hooks, points, and stories. For the Starter tier, you provide the timestamps for the segments you want edited.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <div class="faq-question">What is the onboarding process like?</div>
+        <div class="faq-answer">We jump on a 30-minute kickoff call to align on your brand identity, color palettes, caption typography, and ideal client targets. Then, we set up a shared Google Drive or Frame.io folder. You drop files in, and the engine runs.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <div class="faq-question">How does the guarantee work?</div>
+        <div class="faq-answer">We agree on a delivery schedule (e.g., 5 clips every Monday). If a delivery is late by even an hour, you automatically get 5 additional clips added to your library for free. This holds me accountable to your posting consistency.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <div class="faq-question">Are there other formats or packages available?</div>
+        <div class="faq-answer">I specialize in high-ticket long-term relationships for the Founder Content Engine. However, if you require cinematic documentaries or long-form edits, we can discuss custom project rates during our strategy call.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 Divy Jain. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="engine.html" style="color: var(--c-accent); font-weight: 500;">Founder Content Engine</a></li>
+      <li><a href="https://instagram.com/jn.divy" target="_blank">Instagram</a></li>
+      <li><a href="https://www.linkedin.com/in/divyj913" target="_blank">LinkedIn</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+
+</html>
