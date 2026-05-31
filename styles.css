@@ -1994,3 +1994,60 @@ footer {
     padding: 5rem 1.5rem;
   }
 }
+
+/* Forms */
+.audit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: left;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+.form-input {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  background: var(--c-bg2);
+  border: 1px solid var(--c-line2);
+  color: var(--c-text);
+  padding: 0.8rem 1.2rem;
+  transition: border-color 0.2s, background-color 0.2s;
+  border-radius: 0;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--c-accent);
+  background: var(--c-bg3);
+}
+
+.form-input::placeholder {
+  color: var(--c-muted);
+  opacity: 0.4;
+}
+
+.form-status {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--c-accent);
+  text-align: center;
+  margin-top: 1rem;
+  display: none;
+  line-height: 1.5;
+}
+

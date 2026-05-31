@@ -230,3 +230,48 @@ if (themeToggleBtn) {
     localStorage.setItem('divy-theme', newTheme);
   });
 }
+
+// Form Submission Handling
+const auditForm = document.getElementById('auditForm');
+const formStatus = document.getElementById('formStatus');
+if (auditForm && formStatus) {
+  auditForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const keyInput = document.getElementById('web3forms_key');
+    if (keyInput && keyInput.value === 'YOUR_ACCESS_KEY_HERE') {
+      formStatus.innerText = "Success! (Mock Submission - Please replace YOUR_ACCESS_KEY_HERE with your Web3Forms key in contact.html)";
+      formStatus.style.display = 'block';
+      formStatus.style.color = 'var(--c-accent)';
+      auditForm.reset();
+      return;
+    }
+    
+    formStatus.innerText = "Submitting your application...";
+    formStatus.style.display = 'block';
+    formStatus.style.color = 'var(--c-muted)';
+    
+    const formData = new FormData(auditForm);
+    try {
+      const response = await fetch(auditForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      if (response.ok) {
+        formStatus.innerText = "Thank you! Your audit application has been received. Our team will get back to you within 48 hours.";
+        formStatus.style.color = 'var(--c-accent)';
+        auditForm.reset();
+      } else {
+        const data = await response.json();
+        formStatus.innerText = data.message || "Oops! There was a problem submitting your application.";
+        formStatus.style.color = '#ff6b6b';
+      }
+    } catch (error) {
+      formStatus.innerText = "Oops! There was a network error. Please try again or email directly.";
+      formStatus.style.color = '#ff6b6b';
+    }
+  });
+}
+
