@@ -1,3 +1,26 @@
+#!/bin/bash
+
+# Prevent double backup
+if [ -f "index.html.bak" ]; then
+  echo "Error: index.html.bak already exists. Maintenance mode might already be active!"
+  exit 1
+fi
+
+echo "Starting maintenance mode transition..."
+
+# Backup active pages
+for file in index.html about.html contact.html engine.html pricing.html work.html; do
+  if [ -f "$file" ]; then
+    echo "Backing up $file to $file.bak"
+    mv "$file" "$file.bak"
+  else
+    echo "Warning: $file not found, skipping."
+  fi
+done
+
+# Create maintenance index.html
+echo "Creating temporary index.html maintenance page..."
+cat << 'EOF' > index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,3 +106,23 @@
   <script src="scripts.js"></script>
 </body>
 </html>
+EOF
+
+# Create fallback 404.html
+echo "Creating 404.html redirect page..."
+cat << 'EOF' > 404.html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="refresh" content="0; url=/" />
+  <script>
+    window.location.replace("/");
+  </script>
+</head>
+<body>
+  Redirecting to maintenance page...
+</body>
+</html>
+EOF
+
+echo "Maintenance mode is now active!"
