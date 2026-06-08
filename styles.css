@@ -9,69 +9,69 @@
 }
 
 :root {
-  /* Dark Mode Palette (Default) - Nordic Emerald & Warm Champagne */
-  --c-bg: #030705;
-  --c-bg-rgb: 3, 7, 5;
-  --c-bg-gradient: linear-gradient(180deg, #030705 0%, #08100c 100%);
-  --c-card-bg: rgba(10, 18, 14, 0.45);
-  --c-card-border: rgba(255, 255, 255, 0.05);
+  /* Dark Mode Palette (Default) - Matte Charcoal & Warm Champagne */
+  --c-bg: #080808;
+  --c-bg-rgb: 8, 8, 8;
+  --c-bg-gradient: linear-gradient(180deg, #080808 0%, #121212 100%);
+  --c-card-bg: rgba(20, 20, 20, 0.55);
+  --c-card-border: rgba(255, 255, 255, 0.04);
   --c-card-border-glow: rgba(229, 197, 144, 0.25);
   --c-text: #f3f1f6;
-  --c-muted: #919d97;
+  --c-muted: #9f9b90;
   --c-accent: #e5c590; /* Champagne Gold */
   --c-accent-rgb: 229, 197, 144;
-  --c-secondary: #0f766e; /* Forest Teal */
-  --c-secondary-rgb: 15, 118, 110;
-  --c-line: rgba(255, 255, 255, 0.04);
-  --c-line-hover: rgba(15, 118, 110, 0.15);
-  --c-glow-primary: rgba(15, 118, 110, 0.12);
-  --c-glow-secondary: rgba(229, 197, 144, 0.08);
+  --c-secondary: #c5a059; /* Muted Gold / Amber */
+  --c-secondary-rgb: 197, 160, 89;
+  --c-line: rgba(255, 255, 255, 0.03);
+  --c-line-hover: rgba(229, 197, 144, 0.12);
+  --c-glow-primary: rgba(197, 160, 89, 0.08);
+  --c-glow-secondary: rgba(229, 197, 144, 0.06);
   
   /* Fonts */
   --sans: 'Plus Jakarta Sans', 'Inter', sans-serif;
   --serif: 'Instrument Serif', 'Playfair Display', serif;
   --mono: 'JetBrains Mono', 'DM Mono', monospace;
   
-  --ease: cubic-bezier(0.16, 1, 0.3, 1); /* Custom smooth spring-like curve */
-  --c-vignette: radial-gradient(circle at center, transparent 20%, rgba(4, 3, 8, 0.95) 100%);
-  --c-nav-bg: rgba(10, 9, 20, 0.65);
-  --c-hover-bg: rgba(255, 255, 255, 0.05);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --c-vignette: radial-gradient(circle at center, transparent 20%, rgba(8, 8, 8, 0.95) 100%);
+  --c-nav-bg: rgba(12, 12, 12, 0.65);
+  --c-hover-bg: rgba(255, 255, 255, 0.04);
   
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 12px 32px -4px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
-  --shadow-glow-gold: 0 0 40px rgba(212, 180, 110, 0.12);
+  --shadow-glow: 0 0 40px rgba(197, 160, 89, 0.08);
+  --shadow-glow-gold: 0 0 40px rgba(229, 197, 144, 0.06);
 }
 
 html[data-theme="light"] {
-  /* Light Mode Palette */
-  --c-bg: #f5f4f8;
-  --c-bg-rgb: 245, 244, 248;
-  --c-bg-gradient: linear-gradient(180deg, #f5f4f8 0%, #fafafc 100%);
+  /* Light Mode Palette - Warm Sand & Antique Gold */
+  --c-bg: #faf9f6;
+  --c-bg-rgb: 250, 249, 246;
+  --c-bg-gradient: linear-gradient(180deg, #faf9f6 0%, #f4f2ea 100%);
   --c-card-bg: rgba(255, 255, 255, 0.75);
   --c-card-border: rgba(0, 0, 0, 0.06);
-  --c-card-border-glow: rgba(79, 70, 229, 0.25);
-  --c-text: #0e0c14;
-  --c-muted: #625e70;
-  --c-accent: #a37c2f; /* Premium Antique Gold */
-  --c-accent-rgb: 163, 124, 47;
-  --c-secondary: #4f46e5; /* Royal Indigo */
-  --c-secondary-rgb: 79, 70, 229;
-  --c-line: rgba(0, 0, 0, 0.04);
-  --c-line-hover: rgba(79, 70, 229, 0.15);
-  --c-glow-primary: rgba(79, 70, 229, 0.08);
-  --c-glow-secondary: rgba(163, 124, 47, 0.05);
+  --c-card-border-glow: rgba(154, 125, 70, 0.25);
+  --c-text: #1b1915;
+  --c-muted: #6f6a5c;
+  --c-accent: #9a7d46; /* Muted Antique Gold */
+  --c-accent-rgb: 154, 125, 70;
+  --c-secondary: #cbb693; /* Soft Amber */
+  --c-secondary-rgb: 203, 182, 147;
+  --c-line: rgba(154, 125, 70, 0.05);
+  --c-line-hover: rgba(154, 125, 70, 0.15);
+  --c-glow-primary: rgba(203, 182, 147, 0.1);
+  --c-glow-secondary: rgba(154, 125, 70, 0.08);
   
-  --c-vignette: radial-gradient(circle at center, transparent 20%, rgba(245, 244, 248, 0.95) 100%);
-  --c-nav-bg: rgba(255, 255, 255, 0.75);
+  --c-vignette: radial-gradient(circle at center, transparent 20%, rgba(250, 249, 246, 0.95) 100%);
+  --c-nav-bg: rgba(250, 249, 246, 0.75);
   --c-hover-bg: rgba(0, 0, 0, 0.04);
   
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 12px 32px -4px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 40px rgba(79, 70, 229, 0.08);
-  --shadow-glow-gold: 0 0 40px rgba(163, 124, 47, 0.06);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 12px 32px -4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 40px rgba(203, 182, 147, 0.08);
+  --shadow-glow-gold: 0 0 40px rgba(154, 125, 70, 0.05);
 }
 
 /* Base Element Styles */
