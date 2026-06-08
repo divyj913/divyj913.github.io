@@ -9,23 +9,23 @@
 }
 
 :root {
-  /* Dark Mode Palette (Default) */
-  --c-bg: #040308;
-  --c-bg-rgb: 4, 3, 8;
-  --c-bg-gradient: linear-gradient(180deg, #040308 0%, #0a0914 100%);
-  --c-card-bg: rgba(13, 11, 23, 0.45);
+  /* Dark Mode Palette (Default) - Nordic Emerald & Warm Champagne */
+  --c-bg: #030705;
+  --c-bg-rgb: 3, 7, 5;
+  --c-bg-gradient: linear-gradient(180deg, #030705 0%, #08100c 100%);
+  --c-card-bg: rgba(10, 18, 14, 0.45);
   --c-card-border: rgba(255, 255, 255, 0.05);
-  --c-card-border-glow: rgba(212, 180, 110, 0.25);
+  --c-card-border-glow: rgba(229, 197, 144, 0.25);
   --c-text: #f3f1f6;
-  --c-muted: #9591a3;
-  --c-accent: #d4b46e; /* Warm Gold */
-  --c-accent-rgb: 212, 180, 110;
-  --c-secondary: #6366f1; /* Electric Indigo */
-  --c-secondary-rgb: 99, 102, 241;
+  --c-muted: #919d97;
+  --c-accent: #e5c590; /* Champagne Gold */
+  --c-accent-rgb: 229, 197, 144;
+  --c-secondary: #0f766e; /* Forest Teal */
+  --c-secondary-rgb: 15, 118, 110;
   --c-line: rgba(255, 255, 255, 0.04);
-  --c-line-hover: rgba(212, 180, 110, 0.15);
-  --c-glow-primary: rgba(99, 102, 241, 0.12);
-  --c-glow-secondary: rgba(212, 180, 110, 0.08);
+  --c-line-hover: rgba(15, 118, 110, 0.15);
+  --c-glow-primary: rgba(15, 118, 110, 0.12);
+  --c-glow-secondary: rgba(229, 197, 144, 0.08);
   
   /* Fonts */
   --sans: 'Plus Jakarta Sans', 'Inter', sans-serif;
