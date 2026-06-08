@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selected Work & Client Results — Divy Jain</title>
+  <link rel="icon" href="DJ.jpeg" type="image/jpeg" />
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('divy-theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Background Ambience -->
+  <div class="glow-blob-container">
+    <div class="glow-blob glow-1"></div>
+    <div class="glow-blob glow-2"></div>
+    <div class="glow-blob glow-3"></div>
+  </div>
+  <div class="grid-overlay"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Divy <span>Jain</span></a>
+    <ul class="nav-links">
+      <li><a href="work.html" style="color: var(--c-accent);">Work</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="engine.html">Founder Content Engine</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="pricing.html">Retainers</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="about.html">About</a></li>
+      <li><span class="nav-divider"></span></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+      <a href="contact.html" class="nav-cta">Claim Your Free Audit</a>
+    </div>
+  </nav>
+
+  <!-- Selected Work -->
+  <section id="work" style="padding-top: 10rem;">
+    <div class="section-tag">Selected Work</div>
+    <h2 class="section-title">Three styles,<br><em>one standard</em></h2>
+    <p class="section-sub">Every edit is intentional — from the hook that opens it to the frame that closes it. Here's what that looks like across formats.</p>
+
+    <!-- ── CATEGORY 1: Talking Head ── -->
+    <div class="cat-header reveal">
+      <span class="cat-label">Clean Minimalist Talking Head</span>
+      <div class="cat-rule"></div>
+      <span class="cat-count">3 clips</span>
+    </div>
+    <div class="th-grid reveal">
+
+      <div class="vid-card">
+        <div class="ar-916">
+          <iframe src="https://www.youtube.com/embed/j4-JMscE_EQ?autoplay=1&mute=1&loop=1&playlist=j4-JMscE_EQ"
+            title="Talking Head Edit 1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="vid-info">
+          <span class="vid-type">Talking Head</span>
+          <h4 class="vid-title">Clean Vertical Cut #1</h4>
+          <p class="vid-desc">Stripped-back talking-head edit — no noise, just message. Built for retention.</p>
+        </div>
+      </div>
+
+      <div class="vid-card">
+        <div class="ar-916">
+          <iframe src="https://www.youtube.com/embed/jjglTwuzQyw?autoplay=1&mute=1&loop=1&playlist=jjglTwuzQyw"
+            title="Talking Head Edit 2"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="vid-info">
+          <span class="vid-type">Talking Head</span>
+          <h4 class="vid-title">Clean Vertical Cut #2</h4>
+          <p class="vid-desc">Minimalist caption design with precise cut timing to keep attention locked frame-to-frame.</p>
+        </div>
+      </div>
+
+      <div class="vid-card">
+        <div class="ar-916">
+          <iframe src="https://www.youtube.com/embed/oAV8ywsTkBY?autoplay=1&mute=1&loop=1&playlist=oAV8ywsTkBY"
+            title="Talking Head Edit 3"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="vid-info">
+          <span class="vid-type">Talking Head</span>
+          <h4 class="vid-title">Clean Vertical Cut #3</h4>
+          <p class="vid-desc">Every jump cut earns its place. The flow feels effortless because the edit is disciplined.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── CATEGORY 2: Cinematic Documentary ── -->
+    <div class="cat-header reveal" style="margin-top:5rem;">
+      <span class="cat-label">Cinematic Documentary</span>
+      <div class="cat-rule"></div>
+      <span class="cat-count">1 film</span>
+    </div>
+    <div class="wide-card reveal">
+      <div class="ar-169">
+        <iframe src="https://www.youtube.com/embed/1nolUJnZKPs?autoplay=1&mute=1&loop=1&playlist=1nolUJnZKPs"
+          title="Cinematic Documentary Edit"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+      <div class="wide-info-panel">
+        <span class="vid-type">Cinematic Documentary</span>
+        <h4 class="vid-title">Story-Driven Long-Form Edit</h4>
+        <p class="vid-desc">A full documentary-style edit — pacing driven by narrative arc, not a formula. Grade, sound design, and structure working together to build something that actually lands.</p>
+        <div class="wide-result">
+          <div>
+            <div class="wr-num">16:9</div>
+            <div class="wr-lbl">Cinematic Format</div>
+          </div>
+          <div>
+            <div class="wr-num">Full</div>
+            <div class="wr-lbl">Sound Design</div>
+          </div>
+          <div>
+            <div class="wr-num">Grade</div>
+            <div class="wr-lbl">Colour Treated</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CATEGORY 3: High-Energy Montage ── -->
+    <div class="cat-header reveal" style="margin-top:5rem;">
+      <span class="cat-label">Trailer / High-Energy Social Montage</span>
+      <div class="cat-rule"></div>
+      <span class="cat-count">1 edit</span>
+    </div>
+    <div class="wide-card reveal">
+      <div class="wide-info-panel">
+        <span class="vid-type">High-Energy Montage</span>
+        <h4 class="vid-title">Trailer-Style Fast-Paced Edit</h4>
+        <p class="vid-desc">Kinetic cuts, music-synced transitions, and a build that doesn't let go. Designed to make people feel something in under 60 seconds.</p>
+        <div class="wide-result">
+          <div>
+            <div class="wr-num">Beat</div>
+            <div class="wr-lbl">Sync Cuts</div>
+          </div>
+          <div>
+            <div class="wr-num">Fast</div>
+            <div class="wr-lbl">Pace & Energy</div>
+          </div>
+          <div>
+            <div class="wr-num">SFX</div>
+            <div class="wr-lbl">Sound Design</div>
+          </div>
+        </div>
+      </div>
+      <div class="ar-169">
+        <iframe src="https://www.youtube.com/embed/WlQK8ZoiF20?autoplay=1&mute=1&loop=1&playlist=WlQK8ZoiF20"
+          title="High-Energy Montage Edit"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonial-section">
+    <div class="section-tag" style="justify-content:center; margin-bottom: 2.5rem;">What Clients Say</div>
+    <div class="testimonials-wrap" style="display: flex; justify-content: center; max-width: 680px; margin: 0 auto;">
+      <div class="testimonial-card reveal" style="width: 100%;">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">Divy has worked on his skills, taken feedback seriously, and shown great improvement.</p>
+        <div class="quote-attr">
+          <strong>Sankalp Pandey</strong>
+          <span>Founder, OKAK Production · Social Media Analytics & Growth Expert</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 Divy Jain. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="engine.html" style="color: var(--c-accent); font-weight: 500;">Founder Content Engine</a></li>
+      <li><a href="https://instagram.com/jn.divy" target="_blank">Instagram</a></li>
+      <li><a href="https://www.linkedin.com/in/divyj913" target="_blank">LinkedIn</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+
+</html>

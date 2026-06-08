@@ -1,226 +1,242 @@
-// Cursor
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursor-ring');
-let mx = 0, my = 0, rx = 0, ry = 0;
-if (cursor && ring) {
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
-  });
-  function animRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animRing);
+// 1. Refined Custom Cursor with Lagging Ring
+(function() {
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  
+  if (cursor && ring) {
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX;
+      my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+    
+    function animRing() {
+      // Smooth interpolation (lerp) for the lagging ring
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+    
+    // Add hover states for all interactive elements
+    const interactiveSelectors = 'a, button, .vid-card, .price-card, .bonus-card, .deliv-card, .service-card, input, textarea, label';
+    
+    // Use event delegation or dynamically check elements
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest(interactiveSelectors)) {
+        cursor.classList.add('expand');
+        ring.classList.add('expand');
+      }
+    });
+    
+    document.addEventListener('mouseout', e => {
+      if (!e.target.closest(interactiveSelectors)) {
+        cursor.classList.remove('expand');
+        ring.classList.remove('expand');
+      }
+    });
   }
-  animRing();
-  document.querySelectorAll('a,button,.vid-card,.price-card,.bonus-card,.deliv-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('expand');
-      ring.classList.add('expand');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('expand');
-      ring.classList.remove('expand');
+})();
+
+// 2. Navigation Shrinking and Glassmorphic Scroll Effect
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (nav) {
+    if (window.scrollY > 50) {
+      nav.classList.add('nav-scrolled');
+    } else {
+      nav.classList.remove('nav-scrolled');
+    }
+  }
+});
+
+// 3. Interactive Drifting Glow Blobs (Mouse reactive)
+(function() {
+  const container = document.querySelector('.glow-blob-container');
+  if (!container) return;
+  
+  const blobs = container.querySelectorAll('.glow-blob');
+  document.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 40; // max shift 20px
+    const y = (e.clientY / window.innerHeight - 0.5) * 40;
+    
+    blobs.forEach((blob, idx) => {
+      const factor = (idx + 1) * 0.5; // different speed
+      blob.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
     });
   });
-}
+})();
 
-// Hero canvas
+// 4. Hero Wave & Grid Visual (Canvas replacement for high performance and sleek aesthetics)
 (function () {
   const c = document.getElementById('heroCanvas');
   if (!c) return;
   const ctx = c.getContext('2d');
   let w, h, t = 0;
+  
   function resize() {
     w = c.width = c.offsetWidth;
     h = c.height = c.offsetHeight;
   }
   resize();
   window.addEventListener('resize', resize);
-  const tracks = [
-    { y: 0.35, segs: [{ s: 0.05, e: 0.3, col: '#e8c97a' }, { s: 0.35, e: 0.65, col: '#c8824a' }, { s: 0.7, e: 0.95, col: '#e8c97a' }] },
-    { y: 0.45, segs: [{ s: 0.1, e: 0.45, col: '#888880' }, { s: 0.5, e: 0.9, col: '#666660' }] },
-    { y: 0.55, segs: [{ s: 0.02, e: 0.2, col: '#444440' }, { s: 0.25, e: 0.55, col: '#e8c97a' }, { s: 0.6, e: 0.8, col: '#444440' }] },
-    { y: 0.63, segs: [{ s: 0.08, e: 0.38, col: '#666660' }, { s: 0.44, e: 0.72, col: '#c8824a' }] },
-  ];
-  const waveData = Array.from({ length: 80 }, () => Math.random());
+  
+  // Sine-wave bars properties
+  const barCount = 45;
+  const bars = Array.from({ length: barCount }, () => Math.random());
+  
   function draw() {
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    const gridCol = isLight ? 'rgba(23, 22, 20, 0.04)' : 'rgba(240, 237, 230, 0.04)';
-    const dashCol = isLight ? 'rgba(179, 143, 67, 0.6)' : 'rgba(212, 180, 110, 0.6)';
-    const trackCol = isLight ? 'rgba(23, 22, 20, 0.03)' : 'rgba(240, 237, 230, 0.03)';
-    const waveCol = isLight ? 'rgba(179, 143, 67, 0.25)' : 'rgba(212, 180, 110, 0.25)';
-
     ctx.clearRect(0, 0, w, h);
-    ctx.strokeStyle = gridCol;
+    
+    const themeAccent = isLight ? 'rgba(163, 124, 47, ' : 'rgba(212, 180, 110, ';
+    const themeSecondary = isLight ? 'rgba(79, 70, 229, ' : 'rgba(99, 102, 241, ';
+    
+    // Draw coordinates horizontal tracking line
+    const trackingY = h * 0.55;
+    ctx.strokeStyle = isLight ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.05)';
     ctx.lineWidth = 1;
-    for (let x = 0; x < w; x += 40) {
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, h);
-      ctx.stroke();
-    }
-    for (let y = 0; y < h; y += 40) {
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(w, y);
-      ctx.stroke();
-    }
-    const ph = (Math.sin(t * 0.3) * 0.15 + 0.5) * w;
-    ctx.strokeStyle = dashCol;
-    ctx.lineWidth = 1.5;
-    ctx.setLineDash([4, 4]);
     ctx.beginPath();
-    ctx.moveTo(ph, 0);
-    ctx.lineTo(ph, h);
+    ctx.moveTo(0, trackingY);
+    ctx.lineTo(w, trackingY);
+    ctx.stroke();
+    
+    // Draw animated center pulse marker
+    const markerX = (Math.sin(t * 0.4) * 0.2 + 0.5) * w;
+    ctx.strokeStyle = isLight ? 'rgba(79, 70, 229, 0.4)' : 'rgba(99, 102, 241, 0.4)';
+    ctx.setLineDash([4, 6]);
+    ctx.beginPath();
+    ctx.moveTo(markerX, 0);
+    ctx.lineTo(markerX, h);
     ctx.stroke();
     ctx.setLineDash([]);
-    tracks.forEach(track => {
-      const ty = track.y * h;
-      ctx.fillStyle = trackCol;
-      ctx.fillRect(0, ty - 8, w, 16);
-      track.segs.forEach(seg => {
-        const sx = seg.s * w, ex = seg.e * w;
-        let col = seg.col;
-        if (col === '#e8c97a') col = isLight ? '#b38f43' : '#e8c97a';
-        else if (col === '#c8824a') col = isLight ? '#9b7732' : '#c8824a';
-        ctx.fillStyle = col;
-        ctx.globalAlpha = 0.18;
-        ctx.fillRect(sx, ty - 6, ex - sx, 12);
-        ctx.globalAlpha = 1;
-        ctx.strokeStyle = col;
-        ctx.lineWidth = 0.5;
-        ctx.globalAlpha = 0.5;
-        ctx.strokeRect(sx, ty - 6, ex - sx, 12);
-        ctx.globalAlpha = 1;
-      });
+    
+    // Draw soundwave columns on the tracking line
+    const waveWidth = w * 0.8;
+    const waveStart = (w - waveWidth) / 2;
+    const barWidth = waveWidth / barCount;
+    
+    bars.forEach((v, i) => {
+      const barX = waveStart + i * barWidth;
+      const waveVal = Math.sin(t * 1.5 + i * 0.25) * Math.cos(t * 0.5 + i * 0.1);
+      const amp = v * 90 * (0.3 + 0.7 * Math.abs(waveVal));
+      
+      const grad = ctx.createLinearGradient(barX, trackingY - amp/2, barX, trackingY + amp/2);
+      grad.addColorStop(0, themeSecondary + '0.6)');
+      grad.addColorStop(0.5, themeAccent + '0.8)');
+      grad.addColorStop(1, themeSecondary + '0.6)');
+      
+      ctx.fillStyle = grad;
+      ctx.fillRect(barX + 2, trackingY - amp/2, barWidth - 4, amp);
     });
-    const wTop = h * 0.72, wH = h * 0.18;
-    waveData.forEach((v, i) => {
-      const x = (i / waveData.length) * w;
-      const bh = v * wH * (0.5 + 0.5 * Math.sin(t * 1.5 + i * 0.3));
-      ctx.fillStyle = waveCol;
-      ctx.fillRect(x, wTop + wH / 2 - bh / 2, w / waveData.length - 1, bh);
-    });
-    t += 0.016;
+    
+    t += 0.015;
     requestAnimationFrame(draw);
   }
   draw();
+  
+  // Parallax Canvas translation
+  window.addEventListener('scroll', () => {
+    c.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+  });
 })();
 
-// About canvas
+// 5. About Network Node Visual (Canvas visual)
 (function () {
   const c = document.getElementById('aboutCanvas');
   if (!c) return;
   const ctx = c.getContext('2d');
   let w, h, t = 0;
+  
   function resize() {
     w = c.width = c.offsetWidth;
     h = c.height = c.offsetHeight;
   }
   resize();
   new ResizeObserver(resize).observe(c);
-  const pts = Array.from({ length: 6 }, () => ({
+  
+  const nodes = Array.from({ length: 14 }, () => ({
     x: Math.random(),
     y: Math.random(),
-    vx: (Math.random() - 0.5) * 0.003,
-    vy: (Math.random() - 0.5) * 0.003
+    vx: (Math.random() - 0.5) * 0.0015,
+    vy: (Math.random() - 0.5) * 0.0015,
+    r: Math.random() * 2 + 1
   }));
+  
   function draw() {
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    const bgCol = isLight ? '#F3F0E8' : '#111111';
-    const gridCol = isLight ? 'rgba(23, 22, 20, 0.05)' : 'rgba(240, 237, 230, 0.05)';
-    const lineCol = isLight ? '179, 143, 67' : '212, 180, 110';
-    const dotCol = isLight ? 'rgba(179, 143, 67, 0.5)' : 'rgba(212, 180, 110, 0.5)';
-    const waveCol = isLight ? 'rgba(155, 119, 50, 0.4)' : 'rgba(200, 130, 74, 0.4)';
-
     ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = bgCol;
-    ctx.fillRect(0, 0, w, h);
-    ctx.strokeStyle = gridCol;
-    ctx.lineWidth = 1;
-    for (let x = 0; x < w; x += 32) {
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, h);
-      ctx.stroke();
-    }
-    for (let y = 0; y < h; y += 32) {
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(w, y);
-      ctx.stroke();
-    }
-    pts.forEach(p => {
+    
+    const nodeColor = isLight ? 'rgba(79, 70, 229, 0.45)' : 'rgba(99, 102, 241, 0.45)';
+    const lineColor = isLight ? '79, 70, 229' : '99, 102, 241';
+    
+    nodes.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
+      
       if (p.x < 0 || p.x > 1) p.vx *= -1;
       if (p.y < 0 || p.y > 1) p.vy *= -1;
     });
-    pts.forEach((a, i) => {
-      pts.forEach((b, j) => {
+    
+    // Draw connection lines
+    nodes.forEach((a, i) => {
+      nodes.forEach((b, j) => {
         if (j <= i) return;
-        const dx = (a.x - b.x) * w, dy = (a.y - b.y) * h, dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 200) {
-          ctx.strokeStyle = `rgba(${lineCol},${0.15 * (1 - dist / 200)})`;
-          ctx.lineWidth = 0.5;
+        const dx = (a.x - b.x) * w;
+        const dy = (a.y - b.y) * h;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 180) {
+          const alpha = 0.2 * (1 - dist / 180);
+          ctx.strokeStyle = `rgba(${lineColor}, ${alpha})`;
+          ctx.lineWidth = 0.6;
           ctx.beginPath();
           ctx.moveTo(a.x * w, a.y * h);
           ctx.lineTo(b.x * w, b.y * h);
           ctx.stroke();
         }
       });
-      ctx.fillStyle = dotCol;
+      
+      ctx.fillStyle = nodeColor;
       ctx.beginPath();
-      ctx.arc(a.x * w, a.y * h, 2, 0, Math.PI * 2);
+      ctx.arc(a.x * w, a.y * h, a.r, 0, Math.PI * 2);
       ctx.fill();
     });
-    const wTop = h * 0.6;
-    ctx.strokeStyle = waveCol;
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    for (let x = 0; x < w; x++) {
-      const y = wTop + Math.sin(x * 0.04 + t) * 20 + Math.sin(x * 0.08 + t * 1.3) * 10;
-      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-    t += 0.02;
+    
     requestAnimationFrame(draw);
   }
   draw();
 })();
 
-// Waveform bars
+// 6. Audio Waveform Bar Initializer (About Page)
 const wf = document.getElementById('waveform');
 if (wf) {
-  [18, 28, 40, 35, 24, 44, 30, 22, 38, 44, 28, 32, 20, 42, 36, 26, 44, 32, 18, 38, 24, 30].forEach((h, i) => {
+  const barsData = [16, 26, 42, 34, 20, 46, 28, 18, 38, 48, 26, 30, 16, 44, 38, 22, 46, 30, 14, 38, 22, 28, 16, 34];
+  barsData.forEach((h, i) => {
     const bar = document.createElement('div');
     bar.className = 'wave-bar';
     bar.style.height = h + 'px';
-    bar.style.animationDelay = (i * 0.06) + 's';
+    bar.style.animationDelay = (i * 0.05) + 's';
     wf.appendChild(bar);
   });
 }
 
-// Scroll reveal
-const obs = new IntersectionObserver(entries => {
+// 7. Scroll Reveal Observer
+const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('visible');
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
   });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+}, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
 
-// Parallax hero
-window.addEventListener('scroll', () => {
-  const heroC = document.getElementById('heroCanvas');
-  if (heroC) heroC.style.transform = `translateY(${window.scrollY * 0.3}px)`;
-});
+document.querySelectorAll('.reveal').forEach(r => revealObserver.observe(r));
 
-// Theme toggling scripting logic
+// 8. Theme Toggling Logic
 const themeToggleBtn = document.getElementById('themeToggle');
 if (themeToggleBtn) {
   themeToggleBtn.addEventListener('click', () => {
@@ -231,7 +247,7 @@ if (themeToggleBtn) {
   });
 }
 
-// Form Submission Handling
+// 9. Inquiry Form Submission Handling (Web3Forms)
 const auditForm = document.getElementById('auditForm');
 const formStatus = document.getElementById('formStatus');
 if (auditForm && formStatus) {
@@ -270,7 +286,7 @@ if (auditForm && formStatus) {
         formStatus.style.color = 'var(--c-accent)';
         auditForm.reset();
         
-        // Reset the form view state back to audit
+        // Reset form view state back to audit
         const videoLinkGroup = document.getElementById('videoLinkGroup');
         const formLink = document.getElementById('formLink');
         const submitBtn = document.getElementById('submitBtn');
@@ -282,16 +298,16 @@ if (auditForm && formStatus) {
       } else {
         const data = await response.json();
         formStatus.innerText = data.message || "Oops! There was a problem submitting your application.";
-        formStatus.style.color = '#ff6b6b';
+        formStatus.style.color = '#ef4444';
       }
     } catch (error) {
       formStatus.innerText = "Oops! There was a network error. Please try again or email directly.";
-      formStatus.style.color = '#ff6b6b';
+      formStatus.style.color = '#ef4444';
     }
   });
 }
 
-// Form Inquiry Type Toggling
+// 10. Form Inquiry Type Toggle
 const typeAudit = document.getElementById('typeAudit');
 const typeCall = document.getElementById('typeCall');
 const videoLinkGroup = document.getElementById('videoLinkGroup');
@@ -314,7 +330,7 @@ if (typeAudit && typeCall && videoLinkGroup && formLink && submitBtn) {
   typeCall.addEventListener('change', toggleLinkField);
 }
 
-// FAQ Accordion Toggling
+// 11. Accordion Toggling for FAQ (Clean CSS Grid height transitions)
 document.querySelectorAll('.faq-item').forEach(item => {
   const question = item.querySelector('.faq-question');
   const answer = item.querySelector('.faq-answer');
@@ -340,6 +356,3 @@ document.querySelectorAll('.faq-item').forEach(item => {
     });
   }
 });
-
-
-

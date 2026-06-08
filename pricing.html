@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -18,9 +18,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -28,6 +26,14 @@
 
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Background Ambience -->
+  <div class="glow-blob-container">
+    <div class="glow-blob glow-1"></div>
+    <div class="glow-blob glow-2"></div>
+    <div class="glow-blob glow-3"></div>
+  </div>
+  <div class="grid-overlay"></div>
 
   <!-- NAV -->
   <nav>
@@ -37,7 +43,7 @@
       <li><span class="nav-divider"></span></li>
       <li><a href="engine.html">Founder Content Engine</a></li>
       <li><span class="nav-divider"></span></li>
-      <li><a href="pricing.html" style="color: var(--c-accent); font-weight: 700;">Retainers</a></li>
+      <li><a href="pricing.html" style="color: var(--c-accent);">Retainers</a></li>
       <li><span class="nav-divider"></span></li>
       <li><a href="about.html">About</a></li>
       <li><span class="nav-divider"></span></li>
@@ -45,7 +51,7 @@
     </ul>
     <div style="display: flex; align-items: center; gap: 1rem;">
       <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
-        <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+        <svg class="sun-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="5"></circle>
           <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -57,7 +63,7 @@
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
           <line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>
         </svg>
-        <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+        <svg class="moon-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
@@ -93,7 +99,7 @@
       <!-- Growth -->
       <div class="price-card featured reveal">
         <div class="price-badge">Most Popular</div>
-        <div class="price-tier" style="color: var(--c-accent);">Growth</div>
+        <div class="price-tier">Growth</div>
         <div class="price-amt">$600<span>/mo</span></div>
         <p class="price-desc">A complete distribution system. Scale your authority across channels daily.</p>
         <ul class="price-features">
