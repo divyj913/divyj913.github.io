@@ -281,8 +281,8 @@ if (auditForm && formStatus) {
       });
       if (response.ok) {
         formStatus.innerText = isCall 
-          ? "Thank you! Your strategy call request has been received. Our team will email you a booking link within 48 hours."
-          : "Thank you! Your audit application has been received. Our team will get back to you within 48 hours.";
+          ? "Thank you! Your strategy call request has been received. I will email you a booking link within 48 hours."
+          : "Thank you! Your audit application has been received. I will get back to you within 48 hours.";
         formStatus.style.color = 'var(--c-accent)';
         auditForm.reset();
         
